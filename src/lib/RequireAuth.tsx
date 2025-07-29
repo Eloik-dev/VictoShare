@@ -1,6 +1,6 @@
 import { Navigate } from "react-router"
 import { useUser } from "../hooks/useUser"
-import { Paths } from "../types/Paths"
+import { Paths } from "../constants/Paths"
 
 const RequireAuth = ({ children }: { children: React.ReactNode }) => {
   const user = useUser()

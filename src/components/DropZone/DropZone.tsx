@@ -1,5 +1,5 @@
-import { useCallback, useMemo, type FC } from "react";
-import { useDropzone } from "react-dropzone";
+import { useCallback, useEffect, useMemo, useState, type FC } from "react";
+import { useDropzone, type FileRejection } from "react-dropzone";
 import styles from './DropZone.module.scss';
 import { useResources } from "../../hooks/useResources";
 import FileList from "../FileList/FileList";
@@ -8,10 +8,25 @@ import FileList from "../FileList/FileList";
  * Inspiré de @link https://react-dropzone.js.org/
  */
 const DropZone: FC = () => {
-    const { files, setFiles } = useResources();
+    const { files, setFiles, validate } = useResources();
+
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (files === null || files.length === 0 || validate()) {
+            return;
+        };
+
+        setError("Une erreur inconnue est survenue, veuillez recommencer.");
+    }, [files]);
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
         setFiles(acceptedFiles);
+        setError(null);
+    }, [])
+
+    const onDropRejected = useCallback((rejectedFiles: FileRejection[]) => {
+        setError(`Les fichiers suivants ne sont pas acceptés: ${rejectedFiles.map(f => f.file.name).join(', ')}`)
     }, [])
 
     const {
@@ -22,7 +37,22 @@ const DropZone: FC = () => {
         isDragAccept,
         isDragReject
     } = useDropzone({
-        onDrop
+        onDrop,
+        onDropRejected,
+        onError: () => setError("Une erreur inconnue est survenue, veuillez recommencer."),
+        accept: {
+            'image/*': ['.png', '.jpg', '.jpeg', '.gif'],
+            'application/pdf': ['.pdf'],
+            'application/msword': ['.doc', '.docx'],
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
+            'application/vnd.ms-powerpoint': ['.ppt', '.pptx'],
+            'application/vnd.openxmlformats-officedocument.presentationml.presentation': ['.pptx'],
+            'application/vnd.oasis.opendocument.presentation': ['.odp'],
+            'application/vnd.oasis.opendocument.spreadsheet': ['.ods'],
+            'application/vnd.oasis.opendocument.text': ['.odt'],
+            'application/zip': ['.zip'],
+            'application/x-rar-compressed': ['.rar'],
+        }
     });
 
     const styleClass = useMemo(() => {
@@ -46,6 +76,9 @@ const DropZone: FC = () => {
                         <p>Déposez des fichiers ici en les glissant, ou cliquez pour sélectionner des fichiers</p>
                 }
             </div>
+            {
+                error && <p className='error'>{error}</p>
+            }
             {
                 files && files.length > 0 && <FileList />
             }

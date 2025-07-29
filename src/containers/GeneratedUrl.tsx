@@ -1,16 +1,56 @@
-import { Container } from "@mui/material";
-import { ResourceProvider } from "../contexts/resourceContext";
-import FileList from "../components/FileList/FileList";
+import { Box, Button, Container, Divider, Typography } from "@mui/material";
+import { useNavigate } from "react-router";
+import { Paths } from "../constants/Paths";
+import { useResources } from "../hooks/useResources";
+import { useMemo, useState } from "react";
+import LinkCopyToClipboard from "../components/LinkCopyToClipboard/LinkCopyToClipboard";
+import Share from "./Share";
 
-const GeneratedUrlPage = () => {
+const GeneratedUrl = () => {
+    const { generate, currentToken } = useResources();
+    const navigate = useNavigate();
+
+    const [loading, setLoading] = useState(false);
+
+    const link = useMemo(() => `${window.location.origin}${Paths.access}/${currentToken}`, [currentToken]);
+
+    if (!currentToken || currentToken === "") {
+        return <Share />;
+    }
+
+    const handleRegenerate = async () => {
+        setLoading(true);
+
+        try {
+            await generate();
+        } catch (exception) {
+            console.error(exception);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     return (
-        <ResourceProvider>
-            <Container>
-                <h1>La clé de partage</h1>
-                <FileList />
-            </Container>
-        </ResourceProvider >
+        <Container maxWidth="sm" sx={{ marginTop: "10rem" }}>
+            <Typography variant="h4" marginBottom={3} textAlign={"center"}>Votre lien de partage a été généré!</Typography>
+
+            <Box display={"flex"} flexDirection={"column"} gap={2} >
+
+                <LinkCopyToClipboard link={link} />
+                <Divider />
+
+                <Box>
+                    <Typography variant="body1" textAlign={"center"}>Son code est le suivant: <strong>{currentToken}</strong></Typography>
+                    <Typography variant="body1" textAlign={"center"}>Utilisez le pour monitorer son utilisation dans le tableau de bord</Typography>
+                </Box>
+                <Typography variant="h6" textAlign={"center"}></Typography>
+
+                <Button loading={loading} variant="contained" onClick={handleRegenerate}>Générer un nouveau</Button>
+                <Button variant="outlined" onClick={() => navigate(Paths.share)}>Retourner</Button>
+            </Box>
+
+        </Container >
     );
 };
 
-export default GeneratedUrlPage;
+export default GeneratedUrl;

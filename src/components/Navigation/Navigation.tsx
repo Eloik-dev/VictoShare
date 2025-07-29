@@ -1,22 +1,20 @@
-import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { AppBar, Toolbar, Typography, Link, Button } from '@mui/material';
 import type { FC } from 'react';
-import { useNavigate } from 'react-router';
-import { Paths } from '../../types/Paths';
+import { Paths } from '../../constants/Paths';
 
 const Navigation: FC = () => {
-    const navigate = useNavigate();
-
     return (
         <AppBar position="static" color="default" sx={{ mb: 5 }}>
             <Toolbar>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Outils de partage
-                </Typography>
-                <Button color="inherit" onClick={() => navigate(Paths.analytics)}>
-                    Tableau de bord
-                </Button>
+                <Link href={Paths.share} color="inherit" underline="none" sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" component="div">
+                        VictoShare
+                    </Typography>
+                </Link>
+
+                <Button variant="outlined" color="inherit" href={Paths.dashboard}>Tableau de bord</Button>
             </Toolbar>
-        </AppBar>
+        </AppBar >
     );
 }
 
