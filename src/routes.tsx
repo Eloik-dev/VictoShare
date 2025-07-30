@@ -1,12 +1,13 @@
 import { Route, Routes } from "react-router"
 import Share from "./containers/Share"
-import DashboardPage from "./containers/Dashboard"
-import Login from "./containers/Login"
-import Register from "./containers/Register"
+import Dashboard from "./containers/Dashboard"
 import RequireAuth from "./lib/RequireAuth"
 import { Paths } from "./constants/Paths"
 import GeneratedUrl from "./containers/GeneratedUrl"
 import Access from "./containers/Access"
+import Login from "./containers/Login"
+import Register from "./containers/Register"
+import RequireNoAuth from "./lib/RequireNoAuth"
 
 function RoutesMapping() {
   return (
@@ -33,28 +34,28 @@ function RoutesMapping() {
       <Route
         path={Paths.login}
         element={
-          <>
+          <RequireNoAuth>
             <title>VictoShare - Connexion</title>
             <Login />
-          </>
+          </RequireNoAuth>
         }
       />
       <Route
         path={Paths.register}
         element={
-          <>
+          <RequireNoAuth>
             <title>VictoShare - Inscription</title>
             <Register />
-          </>
+          </RequireNoAuth>
         }
       />
       <Route
         path={Paths.dashboard}
         element={
           <>
-            <title>VictoShare - Analytiques</title>
+            <title>VictoShare - Tableau de bord</title>
             <RequireAuth>
-              <DashboardPage />
+              <Dashboard />
             </RequireAuth>
           </>
         }

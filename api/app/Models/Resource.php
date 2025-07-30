@@ -20,6 +20,7 @@ class Resource extends Model
      * @var string[]
      */
     protected $fillable = [
+        'user_id',
         'token',
         'type',
         'value',
@@ -40,6 +41,22 @@ class Resource extends Model
             $filePath = storage_path("app/private/{$resource->value}");
             FileUtils::deleteDirectory(dirname($filePath));
         });
+    }
+
+    public function getInfo()
+    {
+        if ($this->type == Resource::LINK_TYPE) {
+            return null;
+        }
+
+        $path = storage_path("app/private/{$this->value}");
+        $file = new \SplFileInfo($path);
+
+        return [
+            'name' => $file->getFilename(),
+            'size' => $file->getSize(),
+            'mimetype' => $file->getExtension()
+        ];
     }
 }
 

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ResourceContext } from "../contexts/resourceContext";
+import { ResourceContext } from "../contexts/ResourceContext";
 
 export const useResources = () => {
     const context = useContext(ResourceContext);

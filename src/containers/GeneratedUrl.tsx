@@ -5,11 +5,14 @@ import { useResources } from "../hooks/useResources";
 import { useMemo, useState } from "react";
 import LinkCopyToClipboard from "../components/LinkCopyToClipboard/LinkCopyToClipboard";
 import Share from "./Share";
+import { useUser } from "../hooks/useUser";
 
 const GeneratedUrl = () => {
+    const { user, login } = useUser();
     const { generate, currentToken } = useResources();
     const navigate = useNavigate();
 
+    const [loggingIn, setLoggingIn] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const link = useMemo(() => `${window.location.origin}${Paths.access}/${currentToken}`, [currentToken]);
@@ -30,6 +33,27 @@ const GeneratedUrl = () => {
         }
     }
 
+    const handleOpenDashboard = async () => {
+        if (user) {
+            navigate(Paths.dashboard);
+            return;
+        }
+
+        setLoggingIn(true);
+        try {
+            const formData = new FormData();
+            formData.append('email', `${currentToken}@guest.com`);
+            formData.append('password', currentToken);
+            await login(formData);
+    
+            navigate(Paths.dashboard);
+        } catch (exception) {
+            console.error(exception);
+        } finally {
+            setLoggingIn(false);
+        }
+    };
+
     return (
         <Container maxWidth="sm" sx={{ marginTop: "10rem" }}>
             <Typography variant="h4" marginBottom={3} textAlign={"center"}>Votre lien de partage a été généré!</Typography>
@@ -39,11 +63,13 @@ const GeneratedUrl = () => {
                 <LinkCopyToClipboard link={link} />
                 <Divider />
 
-                <Box>
-                    <Typography variant="body1" textAlign={"center"}>Son code est le suivant: <strong>{currentToken}</strong></Typography>
-                    <Typography variant="body1" textAlign={"center"}>Utilisez le pour monitorer son utilisation dans le tableau de bord</Typography>
-                </Box>
-                <Typography variant="h6" textAlign={"center"}></Typography>
+                {!user && (
+                    <Box>
+                        <Typography variant="body1" textAlign={"center"}>Son code est le suivant: <strong>{currentToken}</strong></Typography>
+                        <Typography variant="body1" textAlign={"center"}>Utilisez le pour monitorer son utilisation dans le tableau de bord</Typography>
+                    </Box>
+                )}
+                <Button variant="outlined" onClick={handleOpenDashboard} loading={loggingIn}>Voir le tableau de bord</Button>
 
                 <Button loading={loading} variant="contained" onClick={handleRegenerate}>Générer un nouveau</Button>
                 <Button variant="outlined" onClick={() => navigate(Paths.share)}>Retourner</Button>

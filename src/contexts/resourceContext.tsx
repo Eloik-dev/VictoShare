@@ -34,13 +34,6 @@ export const ResourceProvider = ({ children }: { children: React.ReactNode }) =>
     const [link, setLink] = useState<string | null>(null);
     const [currentToken, setCurrentToken] = useState<string | null>(null);
 
-    const retrieveCurrentResource = async (): Promise<void> => {
-        const result = await get(ApiPaths.resource.get);
-        if (result.token) {
-            setCurrentToken(result.token);
-        }
-    }
-
     const generate = async (): Promise<string> => {
         if (!validate()) {
             console.error("Resource invalide");
@@ -64,7 +57,7 @@ export const ResourceProvider = ({ children }: { children: React.ReactNode }) =>
             console.error(result);
             return '';
         }
-        
+
         setCurrentToken(result.token);
         return result.token;
     }

@@ -5,23 +5,24 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { toast } from "react-toastify";
 
 interface ILinkCopyToClipboard {
-    link: string
+    link: string,
+    displayText?: string
 }
 
 /**
  * Inspiré de @link https://codesandbox.io/p/sandbox/react-copy-to-clipboard-button-with-material-ui-c8sly3
  */
-const LinkCopyToClipboard: FC<ILinkCopyToClipboard> = ({ link }) => {
+const LinkCopyToClipboard: FC<ILinkCopyToClipboard> = ({ link, displayText }) => {
     const handleClick = () => {
         navigator.clipboard.writeText(link);
         toast.success("Lien copié dans le presse-papier!");
     };
 
     return (
-        <Box display={"flex"} gap={1}>
+        <Box display={"flex"} gap={1} flexGrow={1}>
             <TextField
                 sx={{ flexGrow: 1 }}
-                value={link || ''}
+                value={displayText || link || ''}
                 slotProps={{
                     input: {
                         readOnly: true,

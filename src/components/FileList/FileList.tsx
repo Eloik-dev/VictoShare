@@ -1,6 +1,7 @@
 import styles from './FileList.module.scss';
 import { useResources } from "../../hooks/useResources";
 import { useMemo, type FC } from 'react';
+import FileUtils from '../../utils/FileUtils';
 
 /**
  * Inspiré de @link https://react-dropzone.js.org/
@@ -12,7 +13,7 @@ const FileList: FC = () => {
 
     const fileList = useMemo(() => files.map(
         (file) => (
-            <li key={file.name}>{`${file.name} - ${file.size} octets`}</li>
+            <li key={file.name}>{`${file.name} - ${FileUtils.convertBytesToString(file.size)}`}</li>
         )
     ), [files]);
 

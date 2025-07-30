@@ -7,10 +7,19 @@ const useRequest = () => {
         setError(null);
 
         try {
-            const response = await fetch(url, { ...config, method: 'GET' });
-            if (!response.ok) {
-                throw new Error(`Erreur: ${response.status}`);
+            const response = await fetch(url, {
+                ...config,
+                credentials: 'include',
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                },
+            });
+
+            if (response.status >= 500) {
+                throw new Error(`Erreur lors de la requête: ${response.status}`);
             }
+
             return await response.json();
         } catch (err) {
             setError(err as Error);
@@ -18,19 +27,24 @@ const useRequest = () => {
         }
     };
 
-    const post = async (url: string, formData: FormData, config: HeadersInit = {}) => {
+    const post = async (url: string, data: any = {}, config: HeadersInit = {}) => {
         setError(null);
 
         try {
             const response = await fetch(url, {
                 ...config,
                 method: 'POST',
-                body: formData
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json',
+                },
+                body: data instanceof FormData ? data : JSON.stringify(data),
             });
 
-            if (!response.ok) {
-                throw new Error(`Erreur: ${response.status}`);
+            if (response.status >= 500) {
+                throw new Error(`Erreur lors de la requête: ${response.status}`);
             }
+
             return await response.json();
         } catch (err) {
             setError(err as Error);

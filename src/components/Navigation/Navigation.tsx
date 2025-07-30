@@ -1,18 +1,47 @@
-import { AppBar, Toolbar, Typography, Link, Button } from '@mui/material';
+import { AppBar, Toolbar, Typography, Link, Button, IconButton, Box } from '@mui/material';
 import type { FC } from 'react';
 import { Paths } from '../../constants/Paths';
+import { useUser } from '../../hooks/useUser';
+import { Logout } from '@mui/icons-material';
+import { useNavigate } from 'react-router';
 
 const Navigation: FC = () => {
+    const navigate = useNavigate();
+    const { user, logout } = useUser();
+
+    const handleLogout = async () => {
+        await logout();
+        navigate(Paths.share)
+    };
+
     return (
-        <AppBar position="static" color="default" sx={{ mb: 5 }}>
+        <AppBar position="static" color="default" sx={{ mb: 5, height: '64px', flexShrink: 0 }}>
             <Toolbar>
-                <Link href={Paths.share} color="inherit" underline="none" sx={{ flexGrow: 1 }}>
+                <Link href={Paths.share} color="inherit" underline="none">
                     <Typography variant="h6" component="div">
                         VictoShare
                     </Typography>
                 </Link>
 
-                <Button variant="outlined" color="inherit" href={Paths.dashboard}>Tableau de bord</Button>
+                <Box display={"flex"} gap={4} alignItems={"center"} marginLeft={"auto"}>
+                    {user && (
+                        <Typography variant="h6" component="div">
+                            Bonjour, {user.username}!
+                        </Typography>
+                    )}
+
+                    {user ? (
+                        <Button variant="outlined" color="inherit" href={Paths.dashboard}>Tableau de bord</Button>
+                    ) : (
+                        <Button variant="outlined" color="inherit" href={Paths.login}>Connexion</Button>
+                    )}
+
+                    {user && (
+                        <IconButton title='Se déconnecter' onClick={handleLogout} color="inherit">
+                            <Logout />
+                        </IconButton>
+                    )}
+                </Box>
             </Toolbar>
         </AppBar >
     );

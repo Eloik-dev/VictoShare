@@ -3,19 +3,21 @@ import { useEffect, useMemo, useState } from "react";
 import useRequest from "../hooks/useRequest";
 import { ApiPaths } from "../constants/ApiPaths";
 import { useNavigate, useParams } from "react-router";
-import { ResourceType } from "../types/Resource";
+import { ResourceType, type Resource } from "../types/Resource";
 import { Paths } from "../constants/Paths";
+import DateTimeUtils from "../utils/DateTimeUtils";
+import FileUtils from "../utils/FileUtils";
 
 const Access = () => {
     const { get } = useRequest();
     const navigate = useNavigate();
     const { token } = useParams<{ token: string }>();
 
-    const [resource, setResource] = useState<ResourceType | null>(null);
+    const [resource, setResource] = useState<Resource | null>(null);
 
     useEffect(() => {
         handleGetResource();
-    }, [token, get]);
+    }, []);
 
     const handleGetResource = async () => {
         const resource = await get(`${ApiPaths.resource.get}/${token}`);
@@ -54,6 +56,13 @@ const Access = () => {
             return (
                 <>
                     <Typography variant="h5">Votre téléchargement est prêt!</Typography>
+                    {resource.info &&
+                        <Box>
+                            <Typography variant="body1">Nom du fichier: <b>{resource.value.split('/').pop()}</b></Typography>
+                            <Typography variant="body1">Taille du fichier: {FileUtils.convertBytesToString(resource.info.size)}</Typography>
+                            <Typography variant="body1">Type du fichier: {resource.info.mimetype.toUpperCase()}</Typography>
+                        </Box>
+                    }
                     <Box display={"flex"} flexDirection={"column"} gap={2}>
                         <Link target="_blank" href={`${ApiPaths.resource.access}/${token}`} style={{ textDecoration: "none" }}>
                             <Button variant="contained">
