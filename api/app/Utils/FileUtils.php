@@ -2,6 +2,9 @@
 
 namespace App\Utils;
 
+/**
+ * Utilitaire pour manipuler les fichiers
+ */
 class FileUtils
 {
     /**

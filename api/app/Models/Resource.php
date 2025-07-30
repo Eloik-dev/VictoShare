@@ -15,7 +15,7 @@ class Resource extends Model
     public const FILE_TYPE = 1;
 
     /**
-     * The attributes that are mass assignable.
+     * Les attributs pouvant être affectés de manière massive.
      *
      * @var string[]
      */
@@ -27,8 +27,9 @@ class Resource extends Model
     ];
 
     /**
-     * The "booted" method of the model.
-     *
+     * La méthode "booted" du modèle.
+     * S'occupe de physiquement supprimer un fichier lorsque sa ressource est supprimé.
+     * 
      * @return void
      */
     protected static function booted()
@@ -43,10 +44,15 @@ class Resource extends Model
         });
     }
 
+    /**
+     * Retourne les informations du fichier de la ressource s'il a lieu.
+     * 
+     * @return array{mimetype: string, name: string, size: bool|int|null}
+     */
     public function getInfo()
     {
         if ($this->type == Resource::LINK_TYPE) {
-            return null;
+            return [];
         }
 
         $path = storage_path("app/private/{$this->value}");

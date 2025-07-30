@@ -6,12 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * Modèle pour l'historique des ressources
+ */
 class History extends Model
 {
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Les attributs pouvant être affectés de manière massive.
      *
      * @var string[]
      */
@@ -23,7 +26,7 @@ class History extends Model
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Les attributs exclus de la sérialisation.
      *
      * @var list<string>
      */
@@ -32,6 +35,9 @@ class History extends Model
         'resource_id',
     ];
 
+    /**
+     * Effectue la liaison vers l'utilisateur ayant utilisé la ressource.
+     */
     public function user()
     {
         return $this->belongsTo(User::class);

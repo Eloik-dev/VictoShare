@@ -2,14 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\HttpCodes;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * Contrôleur servant à la gestion des utilisateurs
+ */
 class UserController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * Retourne les informations de l'utilisateur connecté
+     * 
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function index(Request $request): JsonResponse
     {
         $user = $request->user();
 
@@ -18,11 +29,16 @@ class UserController extends Controller
         ]);
     }
 
-    // TODO: Adjust login logic
-    public function login(Request $request)
+    /**
+     * Connexion d'un utilisateur
+     * 
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function login(Request $request): JsonResponse
     {
         $credentials = $request->only('email', 'password');
-        
+
         $guestCode = $request->input('guestCode');
         if ($guestCode) {
             $credentials = [
@@ -34,7 +50,7 @@ class UserController extends Controller
         if (!Auth::attempt($credentials)) {
             return response()->json([
                 'error' => 'Invalid credentials',
-                'status' => 401
+                'status' => HttpCodes::UNAUTHORIZED
             ]);
         }
 
@@ -42,12 +58,17 @@ class UserController extends Controller
         $request->session()->regenerate();
 
         return response()->json([
-            'status' => 200,
+            'status' => HttpCodes::OK,
             'user' => $user,
         ]);
     }
 
-
+    /**
+     * Création d'un utilisateur
+     * 
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function register(Request $request)
     {
         $request->validate([
@@ -71,9 +92,15 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'Compte créé avec succès'
-        ], 201);
+        ], HttpCodes::CREATED);
     }
 
+    /**
+     * Déconnexion d'un utilisateur
+     * 
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function logout(Request $request)
     {
         $request->session()->invalidate();

@@ -6,21 +6,15 @@ use App\Actions\GenerateAction;
 use App\Constants\HttpCodes;
 use App\Models\History;
 use App\Models\Resource;
-use App\Models\User;
-use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use ZipArchive;
 
 /**
  * Contrôleur servant à la gestion des ressources partagées
  */
-class ShareController extends Controller
+class ResourceController extends Controller
 {
     /**
      * Retourne une ressource en fonction de son code d'accès

@@ -15,7 +15,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable, Prunable;
 
     /**
-     * The attributes that are mass assignable.
+     * Les attributs pouvant être affectés de manière massive.
      *
      * @var list<string>
      */
@@ -28,7 +28,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Les attributs exclus de la sérialisation.
      *
      * @var list<string>
      */
@@ -37,7 +37,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Les attributs qui doivent être mis en forme.
      *
      * @return array<string, string>
      */
@@ -48,6 +48,12 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * Retourne les utilisateurs dont les codes d'accès sont expirés.
+     * Utilisé pour la suppression automatique des utilisateurs temporaires.
+     * 
+     * @return User
+     */
     public function prunable()
     {
         return static::where('is_guest', true)
@@ -55,7 +61,8 @@ class User extends Authenticatable
     }
 
     /**
-     * The "booted" method of the model.
+     * La méthode "booted" du modèle.
+     * S'occupe de supprimer toutes les ressources d'un utilisateur lorsqu'il est supprimé.
      *
      * @return void
      */

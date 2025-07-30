@@ -4,6 +4,8 @@ namespace App\Actions;
 
 use App\Constants\HttpCodes;
 use App\Models\Resource;
+use App\Models\User;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -21,35 +23,39 @@ class GenerateAction
      */
     public function execute(Request $request): JsonResponse
     {
-        $request->validate([
-            'link' => 'nullable|url',
-            'files.*' => 'nullable|file',
-            'oldToken' => 'nullable|string'
-        ]);
+        try {
+            $request->validate([
+                'link' => 'nullable|url',
+                'files.*' => 'nullable|file',
+                'oldToken' => 'nullable|string'
+            ]);
 
-        $link = $request->input('link');
-        $files = $request->file('files');
-        $oldToken = $request->input('oldToken');
+            $link = $request->input('link');
+            $files = $request->file('files');
+            $oldToken = $request->input('oldToken');
 
-        if ($oldToken) {
-            $resources = Resource::where('token', $oldToken)->get();
-            foreach ($resources as $resource) {
-                $resource->delete();
-            }
-        }
-
-        if (is_array($files)) {
-            $result = $this->processFiles($files);
-        } elseif (is_string($link)) {
-            if (!filter_var($link, FILTER_VALIDATE_URL)) {
-                return response()->json(['error' => 'L\'URL est invalide'], HttpCodes::BAD_REQUEST);
+            if ($oldToken) {
+                $resources = Resource::where('token', $oldToken)->get();
+                foreach ($resources as $resource) {
+                    $resource->delete();
+                }
             }
 
-            $result = $this->generateToken(Resource::LINK_TYPE, $link);
-        } else {
-            return response()->json(['error' => 'La ressource est invalide'], HttpCodes::BAD_REQUEST);
-        }
+            if (is_array($files)) {
+                $result = $this->processFiles($files);
+            } elseif (is_string($link)) {
+                if (!filter_var($link, FILTER_VALIDATE_URL)) {
+                    return response()->json(['error' => 'L\'URL est invalide'], HttpCodes::BAD_REQUEST);
+                }
 
+                $result = $this->generateToken(Resource::LINK_TYPE, $link);
+            } else {
+                return response()->json(['error' => 'La ressource est invalide'], HttpCodes::BAD_REQUEST);
+            }
+        } catch (Exception $e) {
+            report($e);
+            return response()->json(['error' => 'Une erreur interne est survenue'], HttpCodes::INTERNAL);
+        }
         return response()->json(['token' => $result]);
     }
 
@@ -119,7 +125,7 @@ class GenerateAction
             if ($user->is_guest) {
                 $user->delete();
             }
-            throw new Exception('Failed to save resource', 500);
+            throw new Exception('Une erreur interne est survenue', HttpCodes::INTERNAL);
         }
 
         return $resource->token;
