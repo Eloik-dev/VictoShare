@@ -5,6 +5,14 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /**
+ * Routes pour les requêtes CORS
+ * Permet de gérer les requêtes OPTIONS pour CORS
+ */
+Route::options('/{any}', function () {
+    return response()->json([], 200);
+})->where('any', '.*');
+
+/**
  * Routes d'authentification
  */
 Route::group(['prefix' => 'auth'], function () {
