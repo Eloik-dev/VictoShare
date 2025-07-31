@@ -11,8 +11,6 @@ class ResourceControllerIndexTest extends ResourceControllerTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->resourceFactory = ResourceFactory::new();
     }
 
     /**

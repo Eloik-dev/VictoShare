@@ -79,7 +79,7 @@ const Register: FC = () => {
                     boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)'
                 }}
             >
-                <Typography variant="h4" gutterBottom>
+                <Typography variant="h4" gutterBottom paddingBottom={2}>
                     Créez un compte
                 </Typography>
                 <form onSubmit={handleRegister}>

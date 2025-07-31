@@ -36,6 +36,25 @@ class ResourceController extends Controller
     }
 
     /**
+     * Supprime une ressource par son id
+     * 
+     * @see \Tests\Feature\ResourceController\ResourceControllerDeleteTest
+     * @param string $id L'id de la ressource
+     * @return JsonResponse
+     */
+    public function delete(string $id): JsonResponse
+    {
+        $resource = Resource::find($id);
+        if (!$resource) {
+            return response()->json(null, HttpCodes::NOT_FOUND);
+        }
+
+        $resource->delete();
+
+        return response()->json(null, HttpCodes::OK);
+    }
+
+    /**
      * Retourne toutes les ressources d'un utilisateur
      * 
      * @see \Tests\Feature\ResourceController\ResourceControllerGetAllTest

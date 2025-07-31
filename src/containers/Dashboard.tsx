@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import ResourceTable from "@/components/ResourceTable";
-import VisitorWarning from "@/components/VisitorWarning";
+import ResourceTable from "@/components/Dashboard/ResourceTable";
+import VisitorWarning from "@/components/Dashboard/VisitorWarning";
 
 /**
  * Composante pour afficher le tableau des ressources partagées d'un utilisateur 

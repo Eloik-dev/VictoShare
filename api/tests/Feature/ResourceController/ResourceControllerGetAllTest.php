@@ -3,7 +3,6 @@
 namespace Tests\Feature\ResourceController;
 
 use App\Models\User;
-use Database\Factories\ResourceFactory;
 use Illuminate\Testing\TestResponse;
 use Laravel\Sanctum\Sanctum;
 use Tests\Feature\ResourceControllerTestCase;
@@ -18,7 +17,6 @@ class ResourceControllerGetAllTest extends ResourceControllerTestCase
 
         Sanctum::actingAs($this->user, [], 'sanctum');
 
-        $this->resourceFactory = ResourceFactory::new();
         $this->resources = $this->resourceFactory->count(5)->create(['user_id' => $this->user->id])->toArray();
     }
 

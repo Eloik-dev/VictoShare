@@ -14,15 +14,15 @@ interface IResourceStatus {
 const ResourceStatus: FC<IResourceStatus> = ({ token }) => {
     const { get } = useRequest();
     const navigate = useNavigate();
-    
+
     const [resource, setResource] = useState<Resource | null>(null);
-    
+
     const returnButton = useMemo(() => <Button variant="outlined" onClick={() => navigate(Paths.share)}>Retourner</Button>, []);
 
     useEffect(() => {
         handleGetResource();
     }, []);
-    
+
     const handleGetResource = async () => {
         const resource = await get(`${ApiPaths.resource.get}/${token}`);
         setResource(resource);
@@ -65,11 +65,9 @@ const ResourceStatus: FC<IResourceStatus> = ({ token }) => {
                     </Box>
                 }
                 <Box display={"flex"} flexDirection={"column"} gap={2}>
-                    <Link target="_blank" href={`${ApiPaths.resource.access}/${token}`} style={{ textDecoration: "none" }}>
-                        <Button variant="contained">
-                            Télécharger le fichier
-                        </Button>
-                    </Link>
+                    <Button variant="contained" target="_blank" href={`${ApiPaths.resource.access}/${token}`} >
+                        Télécharger le fichier
+                    </Button>
                     {returnButton}
                 </Box>
             </>

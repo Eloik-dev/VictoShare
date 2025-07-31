@@ -27,6 +27,7 @@ Route::group(['prefix' => 'resource'], function () {
     });
 
     Route::get('/{token}', [ResourceController::class, 'index']);
+    Route::delete('/{token}', [ResourceController::class, 'delete']);
     Route::get('/access/{token}', [ResourceController::class, 'access']);
     Route::post('/generate', [ResourceController::class, 'generate']);
 });

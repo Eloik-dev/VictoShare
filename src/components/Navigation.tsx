@@ -23,11 +23,16 @@ const Navigation: FC = () => {
     return (
         <AppBar position="static" color="default" sx={{ mb: 5, height: '64px', flexShrink: 0 }}>
             <Toolbar>
-                <Link href={Paths.share} color="inherit" underline="none">
-                    <Typography variant="h6" component="div">
-                        VictoShare
-                    </Typography>
-                </Link>
+                <Box display={"flex"} alignItems={"center"} gap={6}>
+                    <Link href={Paths.share} color="inherit" underline="none">
+                        <Typography variant="h6" component="div">
+                            VictoShare
+                        </Typography>
+                    </Link>
+                    <Button variant="outlined" href={Paths.share}>
+                        Partager
+                    </Button>
+                </Box>
 
                 <Box display={"flex"} gap={4} alignItems={"center"} marginLeft={"auto"}>
                     {user && (
@@ -37,19 +42,19 @@ const Navigation: FC = () => {
                     )}
 
                     {user ? (
-                        <Button variant="outlined" color="inherit" href={Paths.dashboard}>Tableau de bord</Button>
+                        <Button variant="contained" href={Paths.dashboard}>Tableau de bord</Button>
                     ) : (
-                        <Button variant="outlined" color="inherit" href={Paths.login}>Connexion</Button>
+                        <Button variant="contained" href={Paths.login}>Connexion</Button>
                     )}
 
                     {user && (
-                        <IconButton title='Se déconnecter' onClick={handleLogout} color="inherit">
+                        <IconButton title='Se déconnecter' onClick={handleLogout}>
                             <Logout />
                         </IconButton>
                     )}
                 </Box>
             </Toolbar>
-        </AppBar >
+        </AppBar>
     );
 }
 
