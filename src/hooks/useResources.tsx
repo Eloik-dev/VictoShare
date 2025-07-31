@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ResourceContext } from "../contexts/ResourceContext";
+import { ResourceContext } from "@/contexts/ResourceContext";
 
 /**
  * Hook pour accéder à la gestion des ressources partagées 
