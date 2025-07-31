@@ -12,7 +12,7 @@ const useRequest = () => {
      * @param config La configuration de la requête
      * @returns Le JSON de la réponse
      */
-    const get = async (url: string, config: HeadersInit = {}) => {
+    const get = async (url: string, config = {}) => {
         setError(null);
 
         try {
@@ -43,7 +43,7 @@ const useRequest = () => {
      * @param config La configuration de la requête
      * @returns Le JSON de la réponse
      */
-    const post = async (url: string, data: any = {}, config: HeadersInit = {}) => {
+    const post = async (url: string, data: any = {}, config = {}) => {
         setError(null);
 
         try {
@@ -76,7 +76,7 @@ const useRequest = () => {
      * @param config La configuration de la requête
      * @returns Le JSON de la réponse
      */
-    const remove = async (url: string, config: HeadersInit = {}) => {
+    const remove = async (url: string, config = {}) => {
         setError(null);
 
         try {
