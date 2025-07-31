@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { UserContext } from "../contexts/UserContext";
+import { UserContext } from "@/contexts/UserContext";
 
 /**
  * Hook pour accéder à la gestion de l'utilisateur 
