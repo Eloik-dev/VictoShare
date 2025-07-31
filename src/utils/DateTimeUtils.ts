@@ -1,4 +1,12 @@
+/**
+ * Classe utilitaire pour manipuler les dates
+ */
 export default class DateTimeUtils {
+    /**
+     * Convertit une date en string formatté 
+     * @param date
+     * @returns La date convertie en string
+     */
     static getDateTimeString(date: Date): string {
         const options: Intl.DateTimeFormatOptions = {
             day: 'numeric',
@@ -11,6 +19,11 @@ export default class DateTimeUtils {
         return date.toLocaleString('fr-FR', options);
     }
 
+    /**
+     * Calcule le temps restant avant une date
+     * @param date 
+     * @returns Le temps restant avant la date en string
+     */
     static getTimeUntilString(date: Date) {
         const now = new Date();
         const diff = date.getTime() - now.getTime();

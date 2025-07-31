@@ -1,11 +1,14 @@
 import { Box, Button, Container, Link, TextField, Typography } from '@mui/material';
 import type { FC } from 'react';
 import { useState } from 'react';
-import { Paths } from '../constants/Paths';
-import useRequest from '../hooks/useRequest';
-import { ApiPaths } from '../constants/ApiPaths';
+import { Paths } from '@/constants/Paths';
+import useRequest from '@/hooks/useRequest';
+import { ApiPaths } from '@/constants/ApiPaths';
 import { useNavigate } from 'react-router';
 
+/**
+ * Composante pour la page de création de compte 
+ */
 const Register: FC = () => {
     const { post } = useRequest();
     const navigate = useNavigate();
@@ -16,6 +19,9 @@ const Register: FC = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
+    /**
+     * Fait l'inscription d'un utilisateur
+     */
     const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!validate()) {
@@ -39,6 +45,9 @@ const Register: FC = () => {
         }
     }
 
+    /**
+     * Valide les champs de connexion 
+     */
     const validate = () => {
         if (!username || !email || !password) {
             setError('Tous les champs sont obligatoires');

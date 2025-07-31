@@ -9,6 +9,9 @@ import Login from "./containers/Login"
 import Register from "./containers/Register"
 import RequireNoAuth from "./lib/RequireNoAuth"
 
+/**
+ * Mapping des routes 
+ */
 function RoutesMapping() {
   return (
     <Routes>

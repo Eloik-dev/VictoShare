@@ -17,18 +17,23 @@ export const UserContext = createContext<IUserContext>({
     logout: () => { }
 });
 
+/**
+ * Contexte pour la gestion de l'utilisateur 
+ */
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     const { get, post } = useRequest();
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
-    // If no user get it
     useEffect(() => {
         if (!user) {
             refreshUser();
         }
     }, [])
 
+    /**
+     * Rafraichissement de l'utilisateur
+     */
     const refreshUser = async () => {
         setLoading(true);
 
@@ -45,6 +50,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         }
     }
 
+    /**
+     * Fait la connexion d'un utilisateur 
+     */
     const login = async (data: any) => {
         const response = await post(ApiPaths.auth.login, data);
         switch (response?.status) {
@@ -57,6 +65,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         }
     }
 
+    /**
+     * Fait la déconnexion d'un utilisateur
+     */
     const logout = async () => {
         try {
             await get(ApiPaths.auth.logout);

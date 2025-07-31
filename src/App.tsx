@@ -1,12 +1,15 @@
 import { BrowserRouter } from "react-router"
-import Navigation from "./components/Navigation/Navigation"
-import './global.scss';
-import { ResourceProvider } from "./contexts/ResourceContext"
+import Navigation from "@/components/Navigation"
+import { ResourceProvider } from "@/contexts/ResourceContext"
 import { Bounce, ToastContainer } from "react-toastify"
-import RoutesMapping from "./routes"
-import { UserProvider } from "./contexts/UserContext";
+import RoutesMapping from "@/routes"
+import { UserProvider } from "@/contexts/UserContext";
 import { Box } from "@mui/material";
+import '@/global.scss';
 
+/**
+ * Point d'entrée de l'application 
+ */
 function App() {
   return (
     <UserProvider>
@@ -36,4 +39,3 @@ function App() {
 }
 
 export default App
-

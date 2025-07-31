@@ -1,15 +1,13 @@
 import { Box, Button, Container, Divider, Link, TextField, Typography } from '@mui/material';
 import { useState, type FC } from 'react';
-import { Paths } from '../constants/Paths';
-import useRequest from '../hooks/useRequest';
-import { useNavigate } from 'react-router';
-import { ApiPaths } from '../constants/ApiPaths';
-import { useUser } from '../hooks/useUser';
+import { Paths } from '@/constants/Paths';
+import { useUser } from '@/hooks/useUser';
 
+/**
+ * Composante de connexion 
+ */
 const Login: FC = () => {
-    const { post } = useRequest();
-    const { setUser, login } = useUser();
-    const navigate = useNavigate();
+    const { login } = useUser();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -17,6 +15,9 @@ const Login: FC = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
+    /**
+     * Fait la connexion d'un utilisateur 
+     */
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!validate()) {
@@ -28,6 +29,9 @@ const Login: FC = () => {
         setLoading(false);
     }
 
+    /**
+     * Valide les champs de connexion 
+     */
     const validate = () => {
         if (guestCode.length > 0) {
             return true;

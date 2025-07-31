@@ -1,8 +1,17 @@
 import { useState } from "react";
 
+/**
+ * Hook pour accéder à la gestion des requêtes HTTP 
+ */
 const useRequest = () => {
     const [error, setError] = useState<Error | null>(null);
 
+    /**
+     * Fait une requête GET
+     * @param url L'url de la requête
+     * @param config La configuration de la requête
+     * @returns Le JSON de la réponse
+     */
     const get = async (url: string, config: HeadersInit = {}) => {
         setError(null);
 
@@ -27,6 +36,13 @@ const useRequest = () => {
         }
     };
 
+    /**
+     * Fait une requête POST
+     * @param url L'url de la requête
+     * @param data Les données de la requête
+     * @param config La configuration de la requête
+     * @returns Le JSON de la réponse
+     */
     const post = async (url: string, data: any = {}, config: HeadersInit = {}) => {
         setError(null);
 
@@ -56,4 +72,3 @@ const useRequest = () => {
 };
 
 export default useRequest;
-

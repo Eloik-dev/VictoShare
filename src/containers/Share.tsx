@@ -1,11 +1,14 @@
 import { Box, Button, Container, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
-import DropZone from "../components/DropZone/DropZone";
-import LinkInput from "../components/LinkInput/LinkInput";
-import { useResources } from "../hooks/useResources";
+import DropZone from "@/components/Share/DropZone/DropZone";
+import LinkInput from "@/components/LinkInput";
+import { useResources } from "@/hooks/useResources";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router";
-import { Paths } from "../constants/Paths";
+import { Paths } from "@/constants/Paths";
 
+/**
+ * Composante pour l'affichage de la page de partage de ressources 
+ */
 const Share = () => {
     const { files, link, isFilesDownload, setIsFilesDownload, generate, validate } = useResources();
     const [loading, setLoading] = useState(false);
@@ -13,6 +16,9 @@ const Share = () => {
 
     const isValid: boolean = useMemo(() => validate(), [isFilesDownload, files, link]);
 
+    /**
+     * Génère un lien de partage de ressources
+     */
     const handleGenerate = async (): Promise<void> => {
         setLoading(true);
 

@@ -11,6 +11,7 @@ class FileUtils
      * Supprimer un dossier et ses fichiers
      * 
      * @link https://www.tutorialspoint.com/how-to-recursively-delete-a-directory-and-its-entire-contents-files-plus-sub-dirs-in-php
+     * @see \Tests\Unit\FileUtilsTest
      * @param string $dirPath
      * @return void
      */

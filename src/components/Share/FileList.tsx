@@ -1,9 +1,9 @@
-import styles from './FileList.module.scss';
-import { useResources } from "../../hooks/useResources";
+import { useResources } from "@/hooks/useResources";
 import { useMemo, type FC } from 'react';
-import FileUtils from '../../utils/FileUtils';
+import FileUtils from '@/utils/FileUtils';
 
 /**
+ * Composante pour afficher la liste des fichiers téléversés
  * Inspiré de @link https://react-dropzone.js.org/
  */
 const FileList: FC = () => {
@@ -18,7 +18,7 @@ const FileList: FC = () => {
     ), [files]);
 
     return (
-        <aside id={styles['fileList']}>
+        <aside>
             <h2>{files.length <= 1 ? 'Fichier téléversé' : 'Fichiers téléversés'}</h2>
             <ul>{fileList}</ul>
         </aside>

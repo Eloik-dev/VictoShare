@@ -1,14 +1,20 @@
 import { AppBar, Toolbar, Typography, Link, Button, IconButton, Box } from '@mui/material';
 import type { FC } from 'react';
-import { Paths } from '../../constants/Paths';
-import { useUser } from '../../hooks/useUser';
+import { Paths } from '@/constants/Paths';
+import { useUser } from '@/hooks/useUser';
 import { Logout } from '@mui/icons-material';
 import { useNavigate } from 'react-router';
 
+/**
+ * Composante pour la barre de navigation 
+ */
 const Navigation: FC = () => {
     const navigate = useNavigate();
     const { user, logout } = useUser();
 
+    /**
+     * Déconnecte l'usagé
+     */
     const handleLogout = async () => {
         await logout();
         navigate(Paths.share)

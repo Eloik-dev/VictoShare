@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\GenerateAction;
+use App\Actions\ResourceController\GenerateAction;
 use App\Constants\HttpCodes;
 use App\Models\History;
 use App\Models\Resource;
@@ -19,12 +19,17 @@ class ResourceController extends Controller
     /**
      * Retourne une ressource en fonction de son code d'accès
      * 
+     * @see \Tests\Feature\ResourceController\ResourceControllerIndexTest
      * @param string $token Le code d'accès de la ressource
      * @return JsonResponse
      */
     public function index(string $token): JsonResponse
     {
         $resource = Resource::where('token', $token)->first();
+        if (!$resource) {
+            return response()->json(null, HttpCodes::NOT_FOUND);
+        }
+
         $resource->setAttribute('info', $resource->getInfo());
 
         return response()->json($resource);
@@ -33,6 +38,7 @@ class ResourceController extends Controller
     /**
      * Retourne toutes les ressources d'un utilisateur
      * 
+     * @see \Tests\Feature\ResourceController\ResourceControllerGetAllTest
      * @return JsonResponse
      */
     public function getAll(): JsonResponse
@@ -46,6 +52,7 @@ class ResourceController extends Controller
     /**
      * Retourne l'historique d'utilisation d'une ressource
      * 
+     * @see \Tests\Feature\ResourceController\ResourceControllerHistoryTest
      * @param int $resourceId L'id de la ressource
      * @return JsonResponse
      */
@@ -59,6 +66,7 @@ class ResourceController extends Controller
     /**
      * Génère une ressource selon son type et retourne son code d'accès
      * 
+     * @see \Tests\Feature\ResourceController\ResourceControllerGenerateTest
      * @param Request $request
      * @param GenerateAction $generateAction
      * @return JsonResponse

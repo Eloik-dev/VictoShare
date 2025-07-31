@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\ResourceController;
 
 use App\Constants\HttpCodes;
 use App\Models\Resource;
@@ -33,6 +33,10 @@ class GenerateAction
             $link = $request->input('link');
             $files = $request->file('files');
             $oldToken = $request->input('oldToken');
+
+            if (!$link && !$files) {
+                return response()->json(['error' => 'La ressource à générer est invalide'], HttpCodes::BAD_REQUEST);
+            }
 
             if ($oldToken) {
                 $resources = Resource::where('token', $oldToken)->get();
@@ -69,6 +73,7 @@ class GenerateAction
     {
         $file = $files[0];
         $folderName = Str::random(16);
+        
         if (count($files) > 1) {
             $tmpFile = tempnam(sys_get_temp_dir(), 'temp-zip-');
             $zip = new ZipArchive();

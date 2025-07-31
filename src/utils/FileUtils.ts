@@ -1,3 +1,6 @@
+/**
+ * Classe utilitaire pour manipuler les données de fichiers
+ */
 export default class FileUtils {
 
     /**

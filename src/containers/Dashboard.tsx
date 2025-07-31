@@ -1,19 +1,14 @@
-import { Box, Typography } from "@mui/material";
-import ResourceTable from "../components/ResourceTable/ResourceTable";
-import { useUser } from "../hooks/useUser";
-import DateTimeUtils from "../utils/DateTimeUtils";
+import { Box } from "@mui/material";
+import ResourceTable from "@/components/ResourceTable";
+import VisitorWarning from "@/components/VisitorWarning";
 
+/**
+ * Composante pour afficher le tableau des ressources partagées d'un utilisateur 
+ */
 const Dashboard = () => {
-    const { user } = useUser();
-
     return (
         <Box display={"flex"} flex={1} maxHeight={"calc(100vh - 10rem)"} flexDirection={"column"} gap={5} marginX={5}>
-            {user && user.is_guest && user.guest_expires_at && (
-                <Typography variant="h6">
-                    Attention, vous êtes actuellement connecté en tant que visiteur. Votre compte sera supprimé dans&nbsp;
-                    <b>{DateTimeUtils.getTimeUntilString(new Date(user.guest_expires_at))}.</b>
-                </Typography>
-            )}
+            <VisitorWarning />
             <ResourceTable />
         </Box>
     );

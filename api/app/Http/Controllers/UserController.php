@@ -6,8 +6,8 @@ use App\Constants\HttpCodes;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Contrôleur servant à la gestion des utilisateurs
@@ -47,20 +47,20 @@ class UserController extends Controller
             ];
         }
 
-        if (!Auth::attempt($credentials)) {
+        if (!auth()->guard('web')->attempt($credentials)) {
             return response()->json([
                 'error' => 'Invalid credentials',
                 'status' => HttpCodes::UNAUTHORIZED
-            ]);
+            ], HttpCodes::UNAUTHORIZED);
         }
 
-        $user = Auth::user();
+        $user = auth()->user();
         $request->session()->regenerate();
 
         return response()->json([
             'status' => HttpCodes::OK,
             'user' => $user,
-        ]);
+        ], HttpCodes::OK);
     }
 
     /**
@@ -71,7 +71,7 @@ class UserController extends Controller
      */
     public function register(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'username' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8',
@@ -83,6 +83,12 @@ class UserController extends Controller
             'password.required' => 'Le mot de passe est requis.',
             'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ], HttpCodes::BAD_REQUEST);
+        }
 
         User::create([
             'username' => $request->username,

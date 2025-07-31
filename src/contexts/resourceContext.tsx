@@ -26,6 +26,9 @@ export const ResourceContext = createContext<IResourceContext>({
     validate: () => false
 });
 
+/**
+ * Contexte pour la gestion des ressources partagées
+ */
 export const ResourceProvider = ({ children }: { children: React.ReactNode }) => {
     const { post } = useRequest();
 
@@ -34,6 +37,10 @@ export const ResourceProvider = ({ children }: { children: React.ReactNode }) =>
     const [link, setLink] = useState<string | null>(null);
     const [currentToken, setCurrentToken] = useState<string | null>(null);
 
+    /**
+     * Génère un lien de partage de ressources à l'aide des informations du contexte
+     * @returns Le token de partage 
+     */
     const generate = async (): Promise<string> => {
         if (!validate()) {
             console.error("Resource invalide");
@@ -62,6 +69,10 @@ export const ResourceProvider = ({ children }: { children: React.ReactNode }) =>
         return result.token;
     }
 
+    /**
+     * Vérifie si la ressource à générer est valide
+     * @returns Vrai si la ressource est valide
+     */
     const validate = (): boolean => {
         if (isFilesDownload) {
             return files !== null && files.length > 0;

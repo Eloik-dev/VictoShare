@@ -1,20 +1,26 @@
 import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table';
-import { Box, IconButton, Link, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { ResourceType, type Resource } from '../../types/Resource';
-import HistoryTable from '../HistoryTable/HistoryTable';
-import { ApiPaths } from '../../constants/ApiPaths';
-import useRequest from '../../hooks/useRequest';
-import DateTimeUtils from '../../utils/DateTimeUtils';
-import { Paths } from '../../constants/Paths';
-import LinkCopyToClipboard from '../LinkCopyToClipboard/LinkCopyToClipboard';
+import { ResourceType, type Resource } from '@/types/Resource';
+import HistoryTable from '@/components/HistoryTable';
+import { ApiPaths } from '@/constants/ApiPaths';
+import useRequest from '@/hooks/useRequest';
+import DateTimeUtils from '@/utils/DateTimeUtils';
+import { Paths } from '@/constants/Paths';
+import LinkCopyToClipboard from '@/components/LinkCopyToClipboard';
 
+/**
+ * Composante pour l'affichage dans un tableau des ressources partagées d'un utilisateur 
+ */
 const ResourceTable = () => {
     const { get } = useRequest();
 
     const [resources, setResources] = useState<Resource[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
+    /**
+     * Définition des colonnes du tableau
+     */
     const columns: MRT_ColumnDef<Resource>[] = [
         {
             header: 'Code d\'accès',
@@ -54,6 +60,9 @@ const ResourceTable = () => {
         refreshResources();
     }, [])
 
+    /**
+     * Effectu un appel pour rafraîchir la liste des ressources
+     */
     const refreshResources = async () => {
         setLoading(true);
 

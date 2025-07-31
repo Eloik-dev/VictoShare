@@ -1,22 +1,28 @@
 import { useEffect, useState, type FC } from 'react';
 import { Typography } from '@mui/material';
-import type { History } from '../../types/History';
-import type { Resource } from '../../types/Resource';
+import type { History } from '@/types/History';
+import type { Resource } from '@/types/Resource';
 import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table';
-import useRequest from '../../hooks/useRequest';
-import { ApiPaths } from '../../constants/ApiPaths';
-import DateTimeUtils from '../../utils/DateTimeUtils';
+import useRequest from '@/hooks/useRequest';
+import { ApiPaths } from '@/constants/ApiPaths';
+import DateTimeUtils from '@/utils/DateTimeUtils';
 
 interface IHistoryTable {
     resource: Resource
 }
 
+/**
+ * Tableau de l'historique d'une ressource  
+ */
 const HistoryTable: FC<IHistoryTable> = ({ resource }) => {
     const { get } = useRequest();
 
     const [history, setHistory] = useState<History[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
+    /**
+     * Définition des colonnes du tableau
+     */
     const columns: MRT_ColumnDef<History>[] = [
         {
             header: 'Utilisateur (peut-être anonyme)',
@@ -56,6 +62,9 @@ const HistoryTable: FC<IHistoryTable> = ({ resource }) => {
         refreshHistory();
     }, [])
 
+    /**
+     * Rafraîchissement de la liste des ressources
+     */
     const refreshHistory = async () => {
         setLoading(true);
 

@@ -1,12 +1,14 @@
 import { Box, Button, Container, Divider, Typography } from "@mui/material";
-import { useNavigate } from "react-router";
-import { Paths } from "../constants/Paths";
-import { useResources } from "../hooks/useResources";
+import { Navigate, useNavigate } from "react-router";
+import { Paths } from "@/constants/Paths";
+import { useResources } from "@/hooks/useResources";
 import { useMemo, useState } from "react";
-import LinkCopyToClipboard from "../components/LinkCopyToClipboard/LinkCopyToClipboard";
-import Share from "./Share";
-import { useUser } from "../hooks/useUser";
+import LinkCopyToClipboard from "@/components/LinkCopyToClipboard";
+import { useUser } from "@/hooks/useUser";
 
+/**
+ * Composante pour l'affichage du lien de partage de ressources 
+ */
 const GeneratedUrl = () => {
     const { user, login } = useUser();
     const { generate, currentToken } = useResources();
@@ -18,9 +20,12 @@ const GeneratedUrl = () => {
     const link = useMemo(() => `${window.location.origin}${Paths.access}/${currentToken}`, [currentToken]);
 
     if (!currentToken || currentToken === "") {
-        return <Share />;
+        return <Navigate to={Paths.share} replace />
     }
 
+    /**
+     * Génère un lien de partage de ressources
+     */
     const handleRegenerate = async () => {
         setLoading(true);
 
@@ -33,6 +38,9 @@ const GeneratedUrl = () => {
         }
     }
 
+    /**
+     * Se connecte au compte temporaire généré et ouvre le tableau de bord 
+     */
     const handleOpenDashboard = async () => {
         if (user) {
             navigate(Paths.dashboard);
@@ -45,7 +53,7 @@ const GeneratedUrl = () => {
             formData.append('email', `${currentToken}@guest.com`);
             formData.append('password', currentToken);
             await login(formData);
-    
+
             navigate(Paths.dashboard);
         } catch (exception) {
             console.error(exception);

@@ -1,3 +1,6 @@
+/**
+ * Type d'un utilisateur
+ */
 export default interface User {
     id: number;
     username: string;

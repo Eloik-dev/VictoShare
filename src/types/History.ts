@@ -1,5 +1,8 @@
 import type User from "./User";
 
+/**
+ * Type d'un enregistrement de l'historique des ressources
+ */
 export type History = {
     id: number,
     user_id: number | null,

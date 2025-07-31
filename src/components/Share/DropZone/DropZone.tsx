@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useMemo, useState, type FC } from "react";
 import { useDropzone, type FileRejection } from "react-dropzone";
 import styles from './DropZone.module.scss';
-import { useResources } from "../../hooks/useResources";
-import FileList from "../FileList/FileList";
+import { useResources } from "@/hooks/useResources";
+import FileList from "../FileList";
 
 /**
+ * Composante pour l'importation de documents
  * Inspiré de @link https://react-dropzone.js.org/
  */
 const DropZone: FC = () => {
@@ -20,11 +21,17 @@ const DropZone: FC = () => {
         setError("Une erreur inconnue est survenue, veuillez recommencer.");
     }, [files]);
 
+    /**
+     * Au dépôt d'un fichier, mettre à jour la liste
+     */
     const onDrop = useCallback((acceptedFiles: File[]) => {
         setFiles(acceptedFiles);
         setError(null);
     }, [])
 
+    /**
+     * Si un fichier n'est pas accepté, afficher une erreur
+     */
     const onDropRejected = useCallback((rejectedFiles: FileRejection[]) => {
         setError(`Les fichiers suivants ne sont pas acceptés: ${rejectedFiles.map(f => f.file.name).join(', ')}`)
     }, [])

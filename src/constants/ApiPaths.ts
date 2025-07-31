@@ -1,3 +1,7 @@
+/**
+ * Constantes pour les routes de l'API
+ */
+
 const BASE_PATH = "http://localhost:8000";
 const BASE_API_PATH = `${BASE_PATH}/api`;
 
