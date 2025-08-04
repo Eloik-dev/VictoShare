@@ -5,6 +5,8 @@ import { Paths } from '@/constants/Paths';
 import useRequest from '@/hooks/useRequest';
 import { ApiPaths } from '@/constants/ApiPaths';
 import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
+import AuthUtils from '@/utils/AuthUtils';
 
 /**
  * Composante pour la page de création de compte 
@@ -14,9 +16,14 @@ const Register: FC = () => {
     const navigate = useNavigate();
 
     const [username, setUsername] = useState('');
+    const [usernameError, setUsernameError] = useState('');
+
     const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState('');
+
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+
     const [loading, setLoading] = useState(false);
 
     /**
@@ -34,12 +41,13 @@ const Register: FC = () => {
 
             if (response?.errors) {
                 const values = Object.values(response.errors);
-                setError(values.join('\n'));
+                toast.error(values.join('\n'));
             } else {
                 navigate(Paths.login);
+                toast.success('Votre compte a été créé avec succès. Vous pouvez maintenant vous connecter.');
             }
         } catch (error) {
-            setError('Erreur inconnue');
+            toast.error('Une erreur inconnue est survenue. Veuillez réessayer plus tard.');
         } finally {
             setLoading(false);
         }
@@ -49,22 +57,34 @@ const Register: FC = () => {
      * Valide les champs de connexion 
      */
     const validate = () => {
-        if (!username || !email || !password) {
-            setError('Tous les champs sont obligatoires');
-            return false;
-        }
-        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-        if (!emailRegex.test(email)) {
-            setError('Le courriel n\'est pas valide');
-            return false;
-        }
-        if (password.length < 8) {
-            setError('Le mot de passe doit contenir au moins 8 caractères');
-            return false;
+        let valid = true;
+
+        setUsernameError('');
+        setEmailError('');
+        setPasswordError('');
+
+        if (!username) {
+            setUsernameError('Le nom d\'utilisateur est requis.');
+            valid = false;
         }
 
-        setError('');
-        return true;
+        if (!email) {
+            setEmailError('Le courriel est requis.');
+            valid = false;
+        } else if (!AuthUtils.isEmailValid(email)) {
+            setEmailError('Le courriel n\'est pas valide.');
+            valid = false;
+        }
+
+        if (!password) {
+            setPasswordError('Le mot de passe est requis.');
+            valid = false;
+        } else if (password.length < 8) {
+            setPasswordError('Le mot de passe doit contenir au moins 8 caractères.');
+            valid = false;
+        }
+
+        return valid;
     }
 
     return (
@@ -91,6 +111,8 @@ const Register: FC = () => {
                         fullWidth
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
+                        error={usernameError !== ''}
+                        helperText={usernameError}
                     />
                     <TextField
                         label="Courriel"
@@ -100,6 +122,8 @@ const Register: FC = () => {
                         fullWidth
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        error={emailError !== ''}
+                        helperText={emailError}
                     />
                     <TextField
                         label="Mot de passe"
@@ -110,19 +134,21 @@ const Register: FC = () => {
                         fullWidth
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        error={passwordError !== ''}
+                        helperText={passwordError}
                     />
                     <Button variant="contained" type="submit" fullWidth loading={loading}>
                         Inscription
                     </Button>
                 </form>
-                {error && <Typography variant="body2" color="error" sx={{ mt: 2 }}>{error}</Typography>}
                 <Typography variant="body2" sx={{ mt: 2 }}>
-                    Déjà inscrit ? <Link href={Paths.login}>Connectez-vous</Link>
+                    Déjà inscrit ? <Link href={Paths.login} underline='none'>Connectez-vous</Link>
                 </Typography>
             </Box>
         </Container>
     );
 }
 export default Register;
+
 
 

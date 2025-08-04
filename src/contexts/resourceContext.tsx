@@ -78,7 +78,16 @@ export const ResourceProvider = ({ children }: { children: React.ReactNode }) =>
             return files !== null && files.length > 0;
         }
 
-        return link !== null && link.length > 0;
+        try {
+            if (link === null || link.trim() === '') {
+                return false;
+            }
+            new URL(link);
+        } catch (e) {
+            return false;
+        }
+
+        return true;
     }
 
     return (

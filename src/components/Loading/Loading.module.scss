@@ -1,0 +1,14 @@
+#icon {
+    height: 5rem;
+    animation: icon-anim 300ms ease-in-out infinite alternate;
+}
+
+@keyframes icon-anim {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.1);
+    }
+}

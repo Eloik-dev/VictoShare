@@ -2,6 +2,8 @@ import { createContext, useEffect, useState } from "react";
 import type User from "../types/User";
 import useRequest from "../hooks/useRequest";
 import { ApiPaths } from "../constants/ApiPaths";
+import Loading from "@/components/Loading/Loading";
+import { toast } from "react-toastify";
 
 export interface IUserContext {
     user: User | null;
@@ -57,10 +59,12 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         const response = await post(ApiPaths.auth.login, data);
         switch (response?.status) {
             case 401:
-                throw new Error('Ce compte n\'existe pas ou les informations de connexion sont incorrectes');
+                toast.error('Ce compte n\'existe pas ou les informations de connexion sont incorrectes.');
+                break;
 
             case 200:
                 setUser(response.user);
+                toast.success(`Vous êtes maintenant connecté en tant que ${response.user.username}!`);
                 break;
         }
     }
@@ -77,7 +81,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         }
     }
 
-    if (loading) return null;
+    if (loading) {
+        return <Loading />
+    };
 
     return (
         <UserContext.Provider value={{ user, setUser, login, logout }}>

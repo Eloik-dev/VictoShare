@@ -3,6 +3,7 @@ import { useDropzone, type FileRejection } from "react-dropzone";
 import styles from './DropZone.module.scss';
 import { useResources } from "@/hooks/useResources";
 import FileList from "../FileList";
+import { Box } from "@mui/material";
 
 /**
  * Composante pour l'importation de documents

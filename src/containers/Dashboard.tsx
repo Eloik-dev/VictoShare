@@ -7,7 +7,7 @@ import VisitorWarning from "@/components/Dashboard/VisitorWarning";
  */
 const Dashboard = () => {
     return (
-        <Box display={"flex"} flex={1} maxHeight={"calc(100vh - 10rem)"} flexDirection={"column"} gap={5} marginX={5}>
+        <Box display={"flex"} maxHeight={"calc(100vh - 10rem)"} flexDirection={"column"} gap={2} marginX={5}>
             <VisitorWarning />
             <ResourceTable />
         </Box>

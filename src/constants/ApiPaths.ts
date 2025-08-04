@@ -2,7 +2,7 @@
  * Constantes pour les routes de l'API
  */
 
-const BASE_PATH = `${window.location.origin}:10000`;
+const BASE_PATH = `http://localhost:8000`;
 const BASE_API_PATH = `${BASE_PATH}/api`;
 
 export const ApiPaths = {
@@ -11,9 +11,12 @@ export const ApiPaths = {
         get: `${BASE_API_PATH}/resource`,
         delete: `${BASE_API_PATH}/resource`,
         getAll: `${BASE_API_PATH}/resource/all`,
-        history: `${BASE_API_PATH}/resource/history`,
         generate: `${BASE_API_PATH}/resource/generate`,
         access: `${BASE_API_PATH}/resource/access`,
+    },
+    history: {
+        getForResource: `${BASE_API_PATH}/history/resource`,
+        delete: `${BASE_API_PATH}/history`,
     },
     auth: {
         user: `${BASE_API_PATH}/auth`,

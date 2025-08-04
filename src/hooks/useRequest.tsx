@@ -1,11 +1,9 @@
-import { useState } from "react";
+import { toast } from "react-toastify";
 
 /**
  * Hook pour accéder à la gestion des requêtes HTTP 
  */
 const useRequest = () => {
-    const [error, setError] = useState<Error | null>(null);
-
     /**
      * Fait une requête GET
      * @param url L'url de la requête
@@ -13,8 +11,6 @@ const useRequest = () => {
      * @returns Le JSON de la réponse
      */
     const get = async (url: string, config = {}) => {
-        setError(null);
-
         try {
             const response = await fetch(url, {
                 ...config,
@@ -31,7 +27,7 @@ const useRequest = () => {
 
             return await response.json();
         } catch (err) {
-            setError(err as Error);
+            toast.error(`Une erreur inconnue est survenue. Veuillez réessayer plus tard.`);
             throw err;
         }
     };
@@ -44,8 +40,6 @@ const useRequest = () => {
      * @returns Le JSON de la réponse
      */
     const post = async (url: string, data: any = {}, config = {}) => {
-        setError(null);
-
         try {
             const response = await fetch(url, {
                 ...config,
@@ -62,9 +56,9 @@ const useRequest = () => {
             }
 
             return await response.json();
-        } catch (err) {
-            setError(err as Error);
-            throw err;
+        } catch (exception) {
+            toast.error(`Une erreur inconnue est survenue. Veuillez réessayer plus tard.`);
+            console.error(exception);
         }
     };
 
@@ -77,8 +71,6 @@ const useRequest = () => {
      * @returns Le JSON de la réponse
      */
     const remove = async (url: string, config = {}) => {
-        setError(null);
-
         try {
             const response = await fetch(url, {
                 ...config,
@@ -94,13 +86,13 @@ const useRequest = () => {
             }
 
             return await response.json();
-        } catch (err) {
-            setError(err as Error);
-            throw err;
+        } catch (exception) {
+            toast.error(`Une erreur inconnue est survenue. Veuillez réessayer plus tard.`);
+            console.error(exception);
         }
     };
 
-    return { get, post, remove, error };
+    return { get, post, remove };
 };
 
 export default useRequest;

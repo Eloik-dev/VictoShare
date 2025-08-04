@@ -2,6 +2,8 @@ import { Box, Button, Container, Divider, Link, TextField, Typography } from '@m
 import { useState, type FC } from 'react';
 import { Paths } from '@/constants/Paths';
 import { useUser } from '@/hooks/useUser';
+import { toast } from 'react-toastify';
+import AuthUtils from '@/utils/AuthUtils';
 
 /**
  * Composante de connexion 
@@ -10,9 +12,12 @@ const Login: FC = () => {
     const { login } = useUser();
 
     const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState('');
+
     const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+
     const [guestCode, setGuestCode] = useState('');
-    const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
     /**
@@ -33,28 +38,32 @@ const Login: FC = () => {
      * Valide les champs de connexion 
      */
     const validate = () => {
+        let valid = true;
+
+        setEmailError('');
+        setPasswordError('');
+
         if (guestCode.length > 0) {
             return true;
         }
 
-        if (!email || !password) {
-            setError('Tous les champs sont obligatoires');
-            return false;
+        if (!email) {
+            setEmailError('Le courriel est requis.');
+            valid = false;
+        } else if (!AuthUtils.isEmailValid(email)) {
+            setEmailError('Le courriel n\'est pas valide.');
+            valid = false;
         }
 
-        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-        if (!emailRegex.test(email)) {
-            setError('Le courriel n\'est pas valide');
-            return false;
+        if (!password) {
+            setPasswordError('Le mot de passe est requis.');
+            valid = false;
+        } else if (password.length < 8) {
+            setPasswordError('Le mot de passe doit contenir au moins 8 caractères.');
+            valid = false;
         }
 
-        if (password.length < 8) {
-            setError('Le mot de passe doit contenir au moins 8 caractères');
-            return false;
-        }
-
-        setError('');
-        return true;
+        return valid;
     }
 
     return (
@@ -81,7 +90,7 @@ const Login: FC = () => {
                         fullWidth
                         onChange={(e) => setEmail(e.target.value)}
                         disabled={guestCode.length > 0}
-                        />
+                    />
                     <TextField
                         label="Mot de passe"
                         variant="outlined"
@@ -110,9 +119,8 @@ const Login: FC = () => {
                         Connexion
                     </Button>
                 </form>
-                {error && <Typography variant="body2" color="error" sx={{ mt: 2 }}>{error}</Typography>}
                 <Typography variant="body2" sx={{ mt: 2 }}>
-                    Pas de compte ? <Link href={Paths.register}>Inscrivez-vous</Link>
+                    Pas de compte ? <Link href={Paths.register} underline='none'>Inscrivez-vous</Link>
                 </Typography>
             </Box>
 

@@ -1,11 +1,15 @@
 import { useEffect, useState, type FC } from 'react';
-import { Typography } from '@mui/material';
+import { Box, IconButton, Typography } from '@mui/material';
 import type { History } from '@/types/History';
 import type { Resource } from '@/types/Resource';
 import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table';
 import useRequest from '@/hooks/useRequest';
 import { ApiPaths } from '@/constants/ApiPaths';
 import DateTimeUtils from '@/utils/DateTimeUtils';
+import { Delete } from '@mui/icons-material';
+import type { IConfirmationPopup } from '../ConfirmationPopup';
+import ConfirmationPopup from '../ConfirmationPopup';
+import { toast } from 'react-toastify';
 
 interface IHistoryTable {
     resource: Resource
@@ -15,10 +19,18 @@ interface IHistoryTable {
  * Tableau de l'historique d'une ressource  
  */
 const HistoryTable: FC<IHistoryTable> = ({ resource }) => {
-    const { get } = useRequest();
+    const { get, remove } = useRequest();
 
     const [history, setHistory] = useState<History[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+
+    const [confirmationPopup, setConfirmationPopup] = useState<IConfirmationPopup>({
+        open: false,
+        title: '',
+        description: '',
+        onConfirm: () => { },
+        onClose: () => { }
+    });
 
     /**
      * Définition des colonnes du tableau
@@ -56,6 +68,16 @@ const HistoryTable: FC<IHistoryTable> = ({ resource }) => {
                 </Typography>
             )
         },
+        {
+            header: 'Actions',
+            Cell: ({ row }) => (
+                <Box display="flex" gap={1}>
+                    <IconButton onClick={() => handleDeleteHistory(row.original)}>
+                        <Delete />
+                    </IconButton>
+                </Box>
+            ),
+        },
     ];
 
     useEffect(() => {
@@ -69,36 +91,83 @@ const HistoryTable: FC<IHistoryTable> = ({ resource }) => {
         setLoading(true);
 
         try {
-            const response = await get(`${ApiPaths.resource.history}/${resource.id}`);
+            const response = await get(`${ApiPaths.history.getForResource}/${resource.id}`);
             if (response?.histories) {
                 setHistory(response.histories);
             }
         } catch (error) {
+            toast.error('Erreur lors du chargement de l\'historique');
             console.error(error);
         } finally {
             setLoading(false);
         }
     }
 
+    /**
+     * Effectu un appel pour supprimer un historique
+     * @param history L'historique à supprimer
+     */
+    const handleDeleteHistory = async (history: History) => {
+
+        const onConfirm = async () => {
+            setLoading(true);
+            resetConfirmationPopup();
+
+            try {
+                const response = await remove(`${ApiPaths.history.delete}/${history.id}`);
+                if (response) {
+                    await refreshHistory();
+                }
+            } catch (error) {
+                toast.error('Erreur lors de la suppression de l\'historique');
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        setConfirmationPopup({
+            open: true,
+            title: 'Suppression de l\'historique',
+            description: 'Cet historique ne sera plus visible. Êtes-vous sur de vouloir le supprimer?',
+            onConfirm: onConfirm,
+            onClose: resetConfirmationPopup
+        });
+    }
+
+    /**
+     * Efface le popup de confirmation
+     */
+    const resetConfirmationPopup = () => {
+        setConfirmationPopup(prev => ({
+            ...prev,
+            open: false
+        }));
+    }
+
     return (
-        <MaterialReactTable
-            columns={columns}
-            data={history}
-            state={{ isLoading: loading }}
-            enablePagination={false}
-            enableFilters={false}
-            enableDensityToggle={false}
-            enableRowVirtualization={false}
-            localization={{
-                noRecordsToDisplay: 'Aucun historique trouvé',
-                noResultsFound: 'Aucune historique trouvé',
-            }}
-            renderTopToolbarCustomActions={() => (
-                <Typography variant="h6" component="div" sx={{ padding: 1, flex: 1 }}>
-                    Historique
-                </Typography>
-            )}
-        />
+        <>
+            <MaterialReactTable
+                columns={columns}
+                data={history}
+                state={{ isLoading: loading }}
+                enablePagination={false}
+                enableFilters={false}
+                enableDensityToggle={false}
+                enableRowVirtualization={false}
+                localization={{
+                    noRecordsToDisplay: 'Aucun historique trouvé',
+                    noResultsFound: 'Aucune historique trouvé',
+                }}
+                renderTopToolbarCustomActions={() => (
+                    <Typography variant="h6" component="div" sx={{ padding: 1, flex: 1 }}>
+                        Historique
+                    </Typography>
+                )}
+            />
+
+            <ConfirmationPopup {...confirmationPopup} />
+        </>
     );
 };
 

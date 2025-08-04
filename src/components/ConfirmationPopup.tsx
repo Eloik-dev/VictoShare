@@ -24,8 +24,8 @@ const ConfirmationPopup: FC<IConfirmationPopup> = ({ open, title, description, o
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose}>Annuler</Button>
-                <Button onClick={onConfirm} autoFocus>
+                <Button onClick={onClose} variant="outlined">Annuler</Button>
+                <Button onClick={onConfirm} variant="contained" autoFocus>
                     Confirmer
                 </Button>
             </DialogActions>

@@ -11,6 +11,7 @@ import LinkCopyToClipboard from '@/components/LinkCopyToClipboard';
 import { Delete } from '@mui/icons-material';
 import type { IConfirmationPopup } from '../ConfirmationPopup';
 import ConfirmationPopup from '../ConfirmationPopup';
+import { toast } from 'react-toastify';
 
 /**
  * Composante pour l'affichage dans un tableau des ressources partagées d'un utilisateur 
@@ -93,6 +94,7 @@ const ResourceTable = () => {
                 setResources(response.resources);
             }
         } catch (error) {
+            toast.error('Erreur lors du chargement des ressources');
             console.error(error);
         } finally {
             setLoading(false);
@@ -115,6 +117,7 @@ const ResourceTable = () => {
                     await refreshResources();
                 }
             } catch (error) {
+                toast.error('Erreur lors de la suppression de la ressource');
                 console.error(error);
             } finally {
                 setLoading(false);
@@ -124,7 +127,7 @@ const ResourceTable = () => {
         setConfirmationPopup({
             open: true,
             title: 'Suppression de la ressource',
-            description: 'Etes-vous sur de vouloir supprimer cette ressource ?',
+            description: 'Cette ressource ne sera plus accessible. Êtes-vous sur de vouloir la supprimer?',
             onConfirm: onConfirm,
             onClose: resetConfirmationPopup
         });
@@ -150,7 +153,7 @@ const ResourceTable = () => {
                     showSkeletons: loading,
                     showLoadingOverlay: false,
                 }}
-                muiTablePaperProps={{ sx: { flex: 1, display: 'flex', flexDirection: 'column' } }}
+                muiTablePaperProps={{ sx: { flex: 1, display: 'flex', flexDirection:'column' } }}
                 muiTableContainerProps={{ sx: { flex: 1, overflow: 'auto' } }}
                 enablePagination={false}
                 enableFilters={false}
@@ -161,11 +164,11 @@ const ResourceTable = () => {
                 enableStickyHeader
                 enableExpanding
                 localization={{
-                    noRecordsToDisplay: 'Aucune ressource trouvée',
+                    noRecordsToDisplay: 'Aucune ressource partagée',
                 }}
                 renderTopToolbarCustomActions={() => (
                     <Typography variant="h6" margin={1}>
-                        Ressources trouvées : {resources.length}
+                        Ressources partagées : {resources.length}
                     </Typography>
                 )}
                 renderDetailPanel={({ row }) => (

@@ -16,11 +16,16 @@ const LinkInput: FC = () => {
      */
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
+        setLink(value);
+    }
 
+    /**
+     * Vérifie l'URL lors de la perte de focus
+     * @param event L'événement de perte de focus
+     */
+    const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
         try {
-            setLink(value);
-            
-            new URL(value);
+            new URL(event.target.value);
             setError(null);
         } catch (_) {
             setError('Veuillez entrer une URL valide.');
@@ -31,8 +36,9 @@ const LinkInput: FC = () => {
         <TextField
             value={link || ''}
             onChange={handleChange}
+            onBlur={handleBlur}
             label="Entrez votre lien ici..."
-            variant="filled"
+            variant="outlined"
             error={error !== null}
             helperText={error}
         />

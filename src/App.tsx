@@ -1,7 +1,7 @@
 import { BrowserRouter } from "react-router"
 import Navigation from "@/components/Navigation"
 import { ResourceProvider } from "@/contexts/ResourceContext"
-import { Bounce, ToastContainer } from "react-toastify"
+import { ToastContainer } from "react-toastify"
 import RoutesMapping from "@/routes"
 import { UserProvider } from "@/contexts/UserContext";
 import { Box } from "@mui/material";
@@ -22,16 +22,10 @@ function App() {
         </BrowserRouter>
         <ToastContainer
           position="bottom-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
+          autoClose={3000}
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme="light"
-          transition={Bounce}
         />
       </ResourceProvider>
     </UserProvider >

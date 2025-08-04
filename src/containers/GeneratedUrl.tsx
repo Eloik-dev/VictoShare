@@ -79,7 +79,7 @@ const GeneratedUrl = () => {
                 )}
                 <Button variant="outlined" onClick={handleOpenDashboard} loading={loggingIn}>Voir le tableau de bord</Button>
 
-                <Button loading={loading} variant="contained" onClick={handleRegenerate}>Générer un nouveau</Button>
+                <Button loading={loading} variant="contained" onClick={handleRegenerate}>Générer à nouveau</Button>
                 <Button variant="outlined" onClick={() => navigate(Paths.share)}>Retourner</Button>
             </Box>
 

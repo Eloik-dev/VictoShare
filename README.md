@@ -15,6 +15,7 @@ Application web pour le partage rapide de liens hypertextes et de fichiers à l'
 		(/) npm install
 		(/api) composer install
 		(/api) php artisan migrate
+		(/api) php artisan key:generate
 
 ### Exécution
 - L'application web est exécutable avec **npm run dev**.

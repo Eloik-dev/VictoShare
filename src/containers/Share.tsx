@@ -33,8 +33,11 @@ const Share = () => {
     }
 
     return (
-        <Container maxWidth="md" sx={{ marginTop: "10rem" }}>
+        <Container maxWidth="md" sx={{ marginTop: "5rem" }}>
             <Typography variant="h4" marginBottom={5} textAlign={"center"}>Commencez votre partage</Typography>
+            <Typography variant="body1" marginBottom={2} textAlign={"center"}>
+                Envoyez des fichiers, raccourcissez des liens et gardez le contrôle total grâce à un tableau de bord intelligent qui suit toutes vos ressources partagées.
+            </Typography>
             <Box minHeight={"20rem"} display={"flex"} flexDirection={"column"} gap={5}>
                 <ToggleButtonGroup
                     color="primary"

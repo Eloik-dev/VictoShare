@@ -5,9 +5,9 @@ namespace Tests\Feature\ResourceController;
 use App\Models\Resource;
 use Illuminate\Testing\TestResponse;
 use Laravel\Sanctum\Sanctum;
-use Tests\Feature\ResourceControllerTestCase;
+use Tests\Feature\HistoryControllerTestCase;
 
-class ResourceControllerHistoryTest extends ResourceControllerTestCase
+class HistoryControllerGetFromResourceTest extends HistoryControllerTestCase
 {
     const HISTORY_LIMIT = 5;
 
@@ -26,11 +26,12 @@ class ResourceControllerHistoryTest extends ResourceControllerTestCase
 
     /**
      * Retourne l'historique d'utilisation d'une ressource
+     * @param int $resourceId L'id de la ressource
      * @return TestResponse
      */
     public function getHistory(int $resourceId): TestResponse
     {
-        return $this->get("/api/resource/history/$resourceId");
+        return $this->get("/api/history/resource/$resourceId");
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,6 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['prefix' => 'resource'], function () {
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/all', [ResourceController::class, 'getAll']);
-        Route::get('/history/{resourceId}', [ResourceController::class, 'history']);
     });
 
     Route::get('/{token}', [ResourceController::class, 'index']);
@@ -32,3 +32,10 @@ Route::group(['prefix' => 'resource'], function () {
     Route::post('/generate', [ResourceController::class, 'generate']);
 });
 
+/**
+ * Routes de gestion des historiques de ressources
+ */
+Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'history'], function () {
+    Route::get('/resource/{historyId}', [HistoryController::class, 'getForResource']);
+    Route::delete('/{historyId}', [HistoryController::class, 'delete']);
+});

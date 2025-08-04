@@ -1,6 +1,7 @@
 import { useResources } from "@/hooks/useResources";
 import { useMemo, type FC } from 'react';
 import FileUtils from '@/utils/FileUtils';
+import { Typography } from "@mui/material";
 
 /**
  * Composante pour afficher la liste des fichiers téléversés
@@ -19,7 +20,9 @@ const FileList: FC = () => {
 
     return (
         <aside>
-            <h2>{files.length <= 1 ? 'Fichier téléversé' : 'Fichiers téléversés'}</h2>
+            <Typography variant="h5">
+                {files.length <= 1 ? 'Fichier téléversé' : 'Fichiers téléversés'}
+            </Typography>
             <ul>{fileList}</ul>
         </aside>
     )
