@@ -19,12 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [
-        'https://victoshare.tailf0c9bd.ts.net',
-        'http://victoshare.tailf0c9bd.ts.net',
-        'https://victoshare.tailf0c9bd.ts.net:10000',
-        'http://localhost:8000',
-    ],
+    'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 
