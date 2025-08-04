@@ -12,10 +12,10 @@ Application web pour le partage rapide de liens hypertextes et de fichiers à l'
 - Le partage de plusieurs fichiers requiert d'activer l'extension **zip** dans le php.ini de votre version.
 - Configurez vos variables d'environnement dans le .env du dossier **/api**.
 - Exécuter les commandes suivantes :
-		(/) npm install
-		(/api) composer install
-		(/api) php artisan migrate
-		(/api) php artisan key:generate
+	1. (/) npm install
+	2. (/api) composer install
+	3. (/api) php artisan migrate
+	4. (/api) php artisan key:generate
 
 ### Exécution
 - L'application web est exécutable avec **npm run dev**.
