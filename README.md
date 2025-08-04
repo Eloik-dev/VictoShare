@@ -22,4 +22,4 @@ Application web pour le partage rapide de liens hypertextes et de fichiers à l'
 - L'API Laravel est démarrée avec **php artisan serve**.
 - Pour le déploiement en production, un dossier **/dist** est créé avec **npm run build**.
 - L'exécution des tests unitaires et fonctionnels se fait avec **./vendor/bin/phpunit** à partir du dossier **/api**
-<img width="484" height="152" alt="image" src="https://github.com/user-attachments/assets/0776bf23-140d-4161-82b0-f7337b2762a3" />
+<img width="482" height="77" alt="image" src="https://github.com/user-attachments/assets/ceddb896-5ca2-46cb-97cd-c7d6a532aaec" />
