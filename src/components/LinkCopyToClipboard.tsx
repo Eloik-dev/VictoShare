@@ -1,4 +1,4 @@
-import { Box, IconButton, TextField } from "@mui/material";
+import { Box, IconButton, TextField, Tooltip } from "@mui/material";
 import { type FC } from 'react';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
@@ -34,12 +34,18 @@ const LinkCopyToClipboard: FC<ILinkCopyToClipboard> = ({ link, displayText }) =>
                     },
                 }}
             />
-            <IconButton onClick={handleClick} color="primary">
-                <ContentCopyIcon />
-            </IconButton>
-            <IconButton color="primary" href={link} target="_blank">
-                <OpenInNewIcon />
-            </IconButton>
+            
+            <Tooltip title="Copier le lien" arrow>
+                <IconButton onClick={handleClick} color="primary">
+                    <ContentCopyIcon />
+                </IconButton>
+            </Tooltip>
+
+            <Tooltip title="Ouvrir le lien dans un nouvel onglet" arrow>
+                <IconButton color="primary" href={link} target="_blank">
+                    <OpenInNewIcon />
+                </IconButton>
+            </Tooltip>
         </Box>
     );
 };

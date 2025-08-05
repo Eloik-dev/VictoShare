@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Typography, Button, IconButton, Box } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, IconButton, Box, Tooltip } from '@mui/material';
 import type { FC } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Paths } from '@/constants/Paths';
@@ -53,9 +53,11 @@ const Navigation: FC = () => {
                     )}
 
                     {user && (
-                        <IconButton title='Se déconnecter' onClick={handleLogout}>
-                            <Logout />
-                        </IconButton>
+                        <Tooltip title="Se déconnecter">
+                            <IconButton onClick={handleLogout}>
+                                <Logout />
+                            </IconButton>
+                        </Tooltip>
                     )}
                 </Box>
             </Toolbar>

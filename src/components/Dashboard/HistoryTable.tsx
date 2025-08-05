@@ -1,5 +1,5 @@
 import { useEffect, useState, type FC } from 'react';
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 import type { History } from '@/types/History';
 import type { Resource } from '@/types/Resource';
 import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table';
@@ -71,11 +71,11 @@ const HistoryTable: FC<IHistoryTable> = ({ resource }) => {
         {
             header: 'Actions',
             Cell: ({ row }) => (
-                <Box display="flex" gap={1}>
+                <Tooltip title="Supprimer l'historique" arrow>
                     <IconButton onClick={() => handleDeleteHistory(row.original)}>
                         <Delete />
                     </IconButton>
-                </Box>
+                </Tooltip>
             ),
         },
     ];
@@ -154,14 +154,15 @@ const HistoryTable: FC<IHistoryTable> = ({ resource }) => {
                 enablePagination={false}
                 enableFilters={false}
                 enableDensityToggle={false}
-                enableRowVirtualization={false}
+                enableHiding={false}
+                enableFullScreenToggle={false}
                 localization={{
                     noRecordsToDisplay: 'Aucun historique trouvé',
                     noResultsFound: 'Aucune historique trouvé',
                 }}
                 renderTopToolbarCustomActions={() => (
-                    <Typography variant="h6" component="div" sx={{ padding: 1, flex: 1 }}>
-                        Historique
+                    <Typography variant="h6" component="div" padding={1}>
+                        Historique d'utilisation de la ressource
                     </Typography>
                 )}
             />

@@ -1,5 +1,5 @@
 import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table';
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ResourceType, type Resource } from '@/types/Resource';
 import HistoryTable from '@/components/Dashboard/HistoryTable';
@@ -69,11 +69,11 @@ const ResourceTable = () => {
         {
             header: 'Actions',
             Cell: ({ row }) => (
-                <Box display="flex" gap={1}>
+                <Tooltip title="Supprimer la ressource" arrow>
                     <IconButton onClick={() => handleDeleteResource(row.original)}>
                         <Delete />
                     </IconButton>
-                </Box>
+                </Tooltip>
             ),
         },
     ];
@@ -153,21 +153,24 @@ const ResourceTable = () => {
                     showSkeletons: loading,
                     showLoadingOverlay: false,
                 }}
-                muiTablePaperProps={{ sx: { flex: 1, display: 'flex', flexDirection:'column' } }}
+                muiTablePaperProps={{ sx: { flex: 1, display: 'flex', flexDirection: 'column' } }}
                 muiTableContainerProps={{ sx: { flex: 1, overflow: 'auto' } }}
                 enablePagination={false}
                 enableFilters={false}
                 enableDensityToggle={false}
+                enableHiding={false}
                 enableExpandAll={false}
                 enableTableFooter={false}
                 enableBottomToolbar={false}
+                enableFullScreenToggle={false}
                 enableStickyHeader
                 enableExpanding
                 localization={{
                     noRecordsToDisplay: 'Aucune ressource partagée',
+                    expand: 'Voir l\'historique'
                 }}
                 renderTopToolbarCustomActions={() => (
-                    <Typography variant="h6" margin={1}>
+                    <Typography variant="h5" padding={1}>
                         Ressources partagées : {resources.length}
                     </Typography>
                 )}
