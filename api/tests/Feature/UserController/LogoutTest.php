@@ -5,7 +5,7 @@ namespace Tests\Feature\UserController;
 use Illuminate\Testing\TestResponse;
 use Tests\Feature\UserControllerTestCase;
 
-class UserControllerLogoutTest extends UserControllerTestCase
+class LogoutTest extends UserControllerTestCase
 {
     protected function setUp(): void
     {

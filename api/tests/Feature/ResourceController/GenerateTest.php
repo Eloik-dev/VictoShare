@@ -2,12 +2,11 @@
 
 namespace Tests\Feature\ResourceController;
 
-use Database\Factories\ResourceFactory;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Testing\TestResponse;
 use Tests\Feature\ResourceControllerTestCase;
 
-class ResourceControllerGenerateTest extends ResourceControllerTestCase
+class GenerateTest extends ResourceControllerTestCase
 {
     protected function setUp(): void
     {

@@ -5,7 +5,7 @@ namespace Tests\Feature\UserController;
 use Illuminate\Testing\TestResponse;
 use Tests\Feature\UserControllerTestCase;
 
-class UserControllerIndexTest extends UserControllerTestCase
+class IndexTest extends UserControllerTestCase
 {
     protected function setUp(): void
     {

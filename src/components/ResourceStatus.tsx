@@ -3,7 +3,8 @@ import { Paths } from "@/constants/Paths";
 import useRequest from "@/hooks/useRequest";
 import { ResourceType, type Resource } from "@/types/Resource";
 import FileUtils from "@/utils/FileUtils";
-import { Box, Button, CircularProgress, Link, Typography } from "@mui/material";
+import { Download } from "@mui/icons-material";
+import { Backdrop, Box, Button, CircularProgress, IconButton, Link, Typography } from "@mui/material";
 import { useEffect, useMemo, useState, type FC } from "react";
 import { useNavigate } from "react-router";
 
@@ -66,7 +67,10 @@ const ResourceStatus: FC<IResourceStatus> = ({ token }) => {
                 }
                 <Box display={"flex"} flexDirection={"column"} gap={2}>
                     <Button variant="contained" target="_blank" href={`${ApiPaths.resource.access}/${token}`} >
-                        Télécharger le fichier
+                        <Box display={"flex"} alignItems={"center"} gap={1}>
+                            <Download />
+                            Télécharger
+                        </Box>
                     </Button>
                     {returnButton}
                 </Box>

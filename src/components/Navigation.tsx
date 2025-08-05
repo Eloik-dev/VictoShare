@@ -38,7 +38,7 @@ const Navigation: FC = () => {
 
                     {user && (
                         <Typography variant="h6" component="div">
-                            Bonjour, {user.username}!
+                            Bonjour, <b>{user.username}</b>
                         </Typography>
                     )}
 

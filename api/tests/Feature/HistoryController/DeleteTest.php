@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\ResourceController;
+namespace Tests\Feature\HistoryController;
 
 use App\Models\History;
 use App\Models\Resource;
@@ -8,7 +8,7 @@ use Illuminate\Testing\TestResponse;
 use Laravel\Sanctum\Sanctum;
 use Tests\Feature\HistoryControllerTestCase;
 
-class HistoryControllerDeleteTest extends HistoryControllerTestCase
+class DeleteTest extends HistoryControllerTestCase
 {
     private Resource $resource;
     private History $history;

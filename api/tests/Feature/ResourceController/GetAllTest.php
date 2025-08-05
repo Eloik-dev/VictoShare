@@ -7,7 +7,7 @@ use Illuminate\Testing\TestResponse;
 use Laravel\Sanctum\Sanctum;
 use Tests\Feature\ResourceControllerTestCase;
 
-class ResourceControllerGetAllTest extends ResourceControllerTestCase
+class GetAllTest extends ResourceControllerTestCase
 {
     private array $resources;
 

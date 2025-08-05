@@ -5,7 +5,7 @@ namespace Tests\Feature\ResourceController;
 use Illuminate\Testing\TestResponse;
 use Tests\Feature\ResourceControllerTestCase;
 
-class ResourceControllerDeleteTest extends ResourceControllerTestCase
+class DeleteTest extends ResourceControllerTestCase
 {
     protected function setUp(): void
     {

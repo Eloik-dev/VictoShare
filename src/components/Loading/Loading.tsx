@@ -5,7 +5,7 @@ const Loading = () => {
     return (
         <Box display={"flex"} flexDirection={"column"} alignItems={"center"} justifyContent={"center"} gap={3} height={"100vh"}>
             <img id={styles['icon']} src="/icon.svg" alt="Chargement" />
-            <Typography variant="h6">Récupération des informations...</Typography>
+            <Typography variant="h6">Chargement en cours...</Typography>
         </Box>
     );
 }

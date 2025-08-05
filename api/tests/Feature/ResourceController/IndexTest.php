@@ -2,11 +2,10 @@
 
 namespace Tests\Feature\ResourceController;
 
-use Database\Factories\ResourceFactory;
 use Illuminate\Testing\TestResponse;
 use Tests\Feature\ResourceControllerTestCase;
 
-class ResourceControllerIndexTest extends ResourceControllerTestCase
+class IndexTest extends ResourceControllerTestCase
 {
     protected function setUp(): void
     {

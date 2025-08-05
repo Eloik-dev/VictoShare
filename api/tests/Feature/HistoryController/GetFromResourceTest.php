@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Feature\ResourceController;
+namespace Tests\Feature\HistoryController;
 
 use App\Models\Resource;
 use Illuminate\Testing\TestResponse;
 use Laravel\Sanctum\Sanctum;
 use Tests\Feature\HistoryControllerTestCase;
 
-class HistoryControllerGetFromResourceTest extends HistoryControllerTestCase
+class GetFromResourceTest extends HistoryControllerTestCase
 {
     const HISTORY_LIMIT = 5;
 

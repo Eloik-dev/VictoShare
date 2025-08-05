@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
 use Tests\Feature\UserControllerTestCase;
 
-class UserControllerLoginTest extends UserControllerTestCase
+class LoginTest extends UserControllerTestCase
 {
     protected function setUp(): void
     {

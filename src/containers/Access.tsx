@@ -9,7 +9,7 @@ const Access = () => {
     const { token } = useParams();
 
     return (
-        <Container maxWidth="sm" sx={{ marginTop: "10rem" }}>
+        <Container maxWidth="sm" sx={{ marginTop: "5rem" }}>
             <Box display={"flex"} flexDirection={"column"} alignItems={"center"} gap={5}>
                 <ResourceStatus token={token || ''} />
             </Box>

@@ -2,11 +2,10 @@
 
 namespace Tests\Feature\UserController;
 
-use App\Models\User;
 use Illuminate\Testing\TestResponse;
 use Tests\Feature\UserControllerTestCase;
 
-class UserControllerRegisterTest extends UserControllerTestCase
+class RegisterTest extends UserControllerTestCase
 {
     protected function setUp(): void
     {
