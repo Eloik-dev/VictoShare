@@ -1,0 +1,1 @@
+declare module 'filepond-plugin-pdf-preview';

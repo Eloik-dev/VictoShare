@@ -42,14 +42,20 @@ const Navigation: FC = () => {
                         </Typography>
                     )}
 
-                    <Button variant={location.pathname === Paths.share ? "contained" : "outlined"} href={Paths.share}>
-                        Partager
-                    </Button>
+                    <Link to={Paths.share} style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <Button variant={location.pathname === Paths.share ? "contained" : "outlined"}>
+                            Partager
+                        </Button>
+                    </Link>
 
                     {user ? (
-                        <Button variant={location.pathname === Paths.dashboard ? "contained" : "outlined"} href={Paths.dashboard}>Tableau de bord</Button>
+                        <Link to={Paths.dashboard} style={{ textDecoration: 'none', color: 'inherit' }}>
+                            <Button variant={location.pathname === Paths.dashboard ? "contained" : "outlined"}>Tableau de bord</Button>
+                        </Link>
                     ) : (
-                        <Button variant={location.pathname === Paths.login ? "contained" : "outlined"} href={Paths.login}>Connexion</Button>
+                        <Link to={Paths.login} style={{ textDecoration: 'none', color: 'inherit' }}>
+                            <Button variant={location.pathname === Paths.login ? "contained" : "outlined"}>Connexion</Button>
+                        </Link>
                     )}
 
                     {user && (

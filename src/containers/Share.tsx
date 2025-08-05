@@ -1,10 +1,9 @@
 import { Box, Button, Container, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
-import DropZone from "@/components/Share/DropZone/DropZone";
-import LinkInput from "@/components/LinkInput";
 import { useResources } from "@/hooks/useResources";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { Paths } from "@/constants/Paths";
+import NewDropZone from "@/components/DropZone";
 
 /**
  * Composante pour l'affichage de la page de partage de ressources 
@@ -33,7 +32,7 @@ const Share = () => {
     }
 
     return (
-        <Container maxWidth="md" sx={{ marginTop: "5rem" }}>
+        <Container maxWidth="md" sx={{ marginTop: "5rem", paddingBottom: "5rem" }}>
             <Typography variant="h4" marginBottom={5} textAlign={"center"}>Commencez votre partage</Typography>
             <Typography variant="body1" marginBottom={2} textAlign={"center"}>
                 Envoyez des fichiers, raccourcissez des liens et gardez le contrôle total grâce à un tableau de bord intelligent qui suit toutes vos ressources partagées.
@@ -51,8 +50,7 @@ const Share = () => {
                     <ToggleButton value={false}>Lien</ToggleButton>
                 </ToggleButtonGroup>
 
-                {isFilesDownload && <DropZone />}
-                {!isFilesDownload && <LinkInput />}
+                {isFilesDownload && <NewDropZone />}
 
                 <Button loading={loading} disabled={!isValid} sx={{ marginTop: "auto", alignSelf: "center", width: "15rem" }} variant="contained" onClick={handleGenerate}>Générer le lien</Button>
             </Box>
