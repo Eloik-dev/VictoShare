@@ -10,6 +10,7 @@ Application web pour le partage rapide de liens hypertextes et de fichiers à l'
 	4. Serveur MySQL (dernière version)
 	5. Composer (dernière version)
 - Le partage de plusieurs fichiers requiert d'activer l'extension **zip** dans le php.ini de votre version.
+- Il est également important d'augmenter la valeur **post_max_size** du php.ini
 - Configurez vos variables d'environnement dans le .env du dossier **/api**.
 - Exécuter les commandes suivantes :
 	1. (/) npm install
