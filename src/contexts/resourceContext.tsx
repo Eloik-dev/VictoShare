@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import useRequest from "../hooks/useRequest";
 import { ApiPaths } from "../constants/ApiPaths";
+import { toast } from "react-toastify";
 
 export interface IResourceContext {
     isFilesDownload: boolean;
@@ -43,7 +44,7 @@ export const ResourceProvider = ({ children }: { children: React.ReactNode }) =>
      */
     const generate = async (): Promise<string> => {
         if (!validate()) {
-            console.error("Resource invalide");
+            toast.error("La ressource est invalide.");
             return "";
         }
 
@@ -54,7 +55,7 @@ export const ResourceProvider = ({ children }: { children: React.ReactNode }) =>
             formData.append('link', link);
         }
 
-        // Add the current token to reset it instead of creating a new one
+        // Utiliser le token de partage actuel au lieu de l'ancien
         if (currentToken) {
             formData.append('oldToken', currentToken);
         }

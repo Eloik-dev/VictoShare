@@ -10,7 +10,7 @@ const VisitorWarning = () => {
     return (
         <Typography variant="h6">
             Attention, vous êtes actuellement connecté en tant qu'utilisateur temporaire. Ce compte sera supprimé dans&nbsp;
-            <b>{DateTimeUtils.getTimeUntilString(new Date(user.guest_expires_at))}.</b>
+            <b>{DateTimeUtils.getHoursUntilString(new Date(user.guest_expires_at))}.</b>
         </Typography>
     );
 }

@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { Paths } from "@/constants/Paths";
 import NewDropZone from "@/components/DropZone";
+import LinkInput from "@/components/LinkInput";
 
 /**
  * Composante pour l'affichage de la page de partage de ressources 
@@ -51,6 +52,7 @@ const Share = () => {
                 </ToggleButtonGroup>
 
                 {isFilesDownload && <NewDropZone />}
+                {!isFilesDownload && <LinkInput />}
 
                 <Button loading={loading} disabled={!isValid} sx={{ marginTop: "auto", alignSelf: "center", width: "15rem" }} variant="contained" onClick={handleGenerate}>Générer le lien</Button>
             </Box>

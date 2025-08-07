@@ -12,7 +12,7 @@ import RequireNoAuth from "./lib/RequireNoAuth"
 /**
  * Mapping des routes 
  */
-function RoutesMapping() {
+export default function RoutesMapping() {
   return (
     <Routes>
       <Route
@@ -75,6 +75,3 @@ function RoutesMapping() {
     </Routes>
   )
 }
-
-export default RoutesMapping
-

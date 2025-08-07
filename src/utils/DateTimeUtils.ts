@@ -20,29 +20,15 @@ export default class DateTimeUtils {
     }
 
     /**
-     * Calcule le temps restant avant une date
+     * Calcule les heures restantes avant une date
      * @param date 
      * @returns Le temps restant avant la date en string
      */
-    static getTimeUntilString(date: Date) {
+    static getHoursUntilString(date: Date) {
         const now = new Date();
         const diff = date.getTime() - now.getTime();
         const minutes = Math.floor(diff / 1000 / 60);
         const hours = Math.floor(minutes / 60);
-        const days = Math.floor(hours / 24);
-        const weeks = Math.floor(days / 7);
-
-        if (diff < 0) {
-            return 'A l\'instant';
-        }
-
-        if (weeks > 0) {
-            return `${weeks} semaine${weeks > 1 ? 's' : ''}`;
-        }
-
-        if (days > 0) {
-            return `${days} jour${days > 1 ? 's' : ''}`;
-        }
 
         if (hours > 0) {
             return `${hours} heure${hours > 1 ? 's' : ''}`;
